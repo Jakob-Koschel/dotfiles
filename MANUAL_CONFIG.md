@@ -4,9 +4,6 @@
 
 ### Plugins
 
-- install uBlock Origin
-- LastPass
-
 TODO:
 
 ## Brave
@@ -15,6 +12,7 @@ TODO:
 
 - uBlock Origin
 - LastPass
+- HTTPS Everywhere
 
 TODO:
 
