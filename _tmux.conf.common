@@ -1,0 +1,54 @@
+# Configure your default shell, Zsh in my case.
+set -g default-shell $SHELL
+
+# Override the default command to use `reattach-to-user-namespace` for everything.
+set -g default-command "reattach-to-user-namespace -l ${SHELL}"
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'jimeh/tmux-themepack'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+
+set -g @continuum-restore 'on'
+
+set -g @themepack 'basic'
+
+set -g pane-border-status bottom
+set -g pane-border-format "#P: #{pane_title}"
+
+# start window numbers at 1 to match keyboard order with tmux window order
+set -g base-index 1
+set-window-option -g pane-base-index 1
+
+# renumber windows sequentially after closing any of them
+set -g renumber-windows on
+
+# Remap prefix to ctrl-a (or caps-a for my mac)
+set -g prefix C-a
+
+# increase scrollback lines
+set -g history-limit 10000
+
+# Use vim keybindings in copy mode
+setw -g mode-keys vi
+
+#  clear screen
+bind C-l send-keys 'C-l'
+
+bind C-k send-keys -R \; clear-history
+
+is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
+bind -n C-v if-shell "$is_vim" "send-keys C-v" "split-window -h"
+bind -n C-s if-shell "$is_vim" "send-keys C-s" "split-window -v"
+
+bind-key j resize-pane -D 5
+bind-key k resize-pane -U 5
+bind-key h resize-pane -L 5
+bind-key l resize-pane -R 5
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
+
