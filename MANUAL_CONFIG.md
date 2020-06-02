@@ -22,3 +22,4 @@ TODO:
 - [MAYBE]: Disable WYSIWG editing
 
 ## Notes
+- `Preferences` -> `New notes starts with` = `Body`
