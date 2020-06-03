@@ -14,7 +14,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Install if we don't have it
 if test ! $(which brew); then
   echo "Installing homebrew..."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
 # Make sure we’re using the latest Homebrew.
@@ -78,8 +78,8 @@ brew link libxslt --force
 
 # Core casks
 brew cask list alfred  || brew cask install --appdir="/Applications" alfred
-brew cask list iterm2  || rew cask install --appdir="~/Applications" iterm2
-brew cask list xquartz || rew cask install --appdir="~/Applications" xquartz
+brew cask list iterm2  || brew cask install --appdir="~/Applications" iterm2
+brew cask list xquartz || brew cask install --appdir="~/Applications" xquartz
 
 # Development tool casks
 brew cask list macdown || brew cask install --appdir="/Applications" macdown
