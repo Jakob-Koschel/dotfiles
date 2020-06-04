@@ -17,6 +17,11 @@
 - offer to save passwords should be set to no
 - auto sign-in off
 
+## GoogleDrive
+- quit `Backup and Sync`
+- rename `~/Google Drive` to `~/GoogleDrive`
+- restart `Backup and Sync`
+- locate new directory
 
 ## Alfred
 - remap spotlight to control + space
