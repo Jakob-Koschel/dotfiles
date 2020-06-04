@@ -29,6 +29,9 @@ brew install \
   moreutils \
   findutils \
   gnu-sed \
+  tmux \
+  vim \
+  grep \
   bash \
   `# node` \
   nvm \
@@ -47,6 +50,7 @@ brew install \
   curl \
   dark-mode \
   diff-so-fancy \
+  dockutil \
   git \
   git-crypt \
   hexedit \
@@ -93,6 +97,8 @@ brew cask list karabiner-elements || brew cask install --appdir="/Applications" 
 brew cask list sdformatter        || brew cask install --appdir="/Applications" sdformatter
 brew cask list spotify            || brew cask install --appdir="/Applications" spotify
 brew cask list the-unarchiver     || brew cask install --appdir="/Applications" the-unarchiver
+brew cask list caffeine           || brew cask install --appdir="/Applications" caffeine
+brew cask list spectacle          || brew cask install --appdir="/Applications" spectacle
 brew cask list thunderbird        || brew cask install --appdir="/Applications" thunderbird
 brew cask list vlc                || brew cask install --appdir="/Applications" vlc
 brew cask list visual-studio-code || brew cask install --appdir="/Applications" visual-studio-code

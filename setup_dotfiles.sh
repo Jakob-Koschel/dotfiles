@@ -13,16 +13,17 @@ function special_echo {
 
 if [ "$(uname)" == "Darwin" ]; then
   OS_NAME="MacOS"
-  $DIR/osx/setup.sh
+  # $DIR/osx/setup.sh
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   OS_NAME="Linux"
-  $DIR/linux/setup.sh
+  # $DIR/linux/setup.sh
 fi
 
 special_echo "Setup Vundle"
 test -d $DIR/_vim/bundle/Vundle.vim || git clone $VUNDLE_GIT_REMOTE $DIR/_vim/bundle/Vundle.vim
 
 special_echo "Setting $HOME/.vim to link to $DIR/_vim directory"
+rm -rf $HOME/.vim
 ln -sfn $DIR/_vim $HOME/.vim
 
 special_echo "Overwriting $HOME/.vimrc"
@@ -66,7 +67,7 @@ special_echo "Setting $HOME/.tmux"
 ln -sfn $DIR/_tmux $HOME/.tmux
 
 special_echo "Install TPM plugins"
-_tmux/plugins/tpm/scripts/install_plugins.sh
+$HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 special_echo "Overwriting $HOME/.gitconfig"
 ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/_gitconfig $HOME/.gitconfig
