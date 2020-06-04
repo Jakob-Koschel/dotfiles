@@ -42,9 +42,9 @@ mkdir -p $HOME/.zsh
 
 special_echo "Setting $HOME/.zsh/path.zsh"
 if [ "$OS_NAME" == "MacOS" ]; then
-  ln -sfn $DIR/zsh/_path.zsh_mac $HOME/.zsh/path.zsh
+  ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/zsh/_path.zsh_mac $HOME/.zsh/path.zsh
 elif [ "$OS_NAME" == "Linux" ]; then
-  ln -sfn $DIR/zsh/_path.zsh_linux $HOME/.zsh/path.zsh
+  ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/zsh/_path.zsh_linux $HOME/.zsh/path.zsh
 fi
 
 special_echo "Overwriting $HOME/.zshrc"
@@ -69,4 +69,4 @@ special_echo "Install TPM plugins"
 _tmux/plugins/tpm/scripts/install_plugins.sh
 
 special_echo "Overwriting $HOME/.gitconfig"
-ln -sfn $DIR/_gitconfig $HOME/.gitconfig
+ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/_gitconfig $HOME/.gitconfig
