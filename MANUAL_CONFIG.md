@@ -23,6 +23,8 @@
 - restart `Backup and Sync`
 - locate new directory
 
+- don't forget moving over files from old `Computer` section in GoogleDrive
+
 ## Alfred
 - remap spotlight to control + space
 - remap to command + space
