@@ -10,7 +10,13 @@
 
 ### Settings
 
-TODO:
+- disabled sponsored images
+- import bookmarks backup
+- set google as default search engine
+- make it default browser
+- offer to save passwords should be set to no
+- auto sign-in off
+
 
 ## Alfred
 - remap spotlight to control + space
