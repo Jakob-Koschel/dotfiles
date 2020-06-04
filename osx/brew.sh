@@ -118,5 +118,18 @@ brew cask install \
   quicklook-csv \
   qlimagesize
 
+# font-roboto-mono requires svn, online version is broken (missing /static)
+brew install svn
+brew cask install $DIR/font-roboto-mono.rb
+brew uninstall svn
+
+# start necessary apps
+open "/Applications/Alfred 4.app"
+open "/Applications/Caffeine.app"
+open "/Applications/Spectacle.app"
+
+# install virtualenvwrapper
+pip3 install virtualenvwrapper
+
 # Remove outdated versions from the cellar.
 brew cleanup
