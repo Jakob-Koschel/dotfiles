@@ -761,7 +761,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>RobotoMonoForPowerline-Regular 12</string>
+			<string>RobotoMono-Regular 11</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1510,7 +1510,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>RobotoMonoForPowerline-Regular 12</string>
+			<string>RobotoMono-Regular 11</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -2146,7 +2146,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>RobotoMonoForPowerline-Regular 12</string>
+			<string>RobotoMono-Regular 11</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -2217,6 +2217,11 @@
 	<array>
 		<string>3.3.10</string>
 	</array>
+	<key>NoSyncBFPRecents</key>
+	<array>
+		<string>Roboto Mono</string>
+		<string>Menlo</string>
+	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
@@ -2227,7 +2232,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>5BCE2127-A144-4A68-959F-E653134F2C18</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>14</integer>
+	<integer>15</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>613089704.988307</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
