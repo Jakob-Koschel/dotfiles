@@ -26,7 +26,10 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 defaults write "Apple Global Domain" "AppleInterfaceStyle" "Dark"
 
 # Set standby delay to 24 hours (default is 1 hour or 3600)
-sudo pmset -a standbydelay 900
+sudo pmset -a standbydelay 3600
+# Set sleep to 15 minutes
+sudo pmset -a displaysleep 15
+sudo pmset -a sleep 15
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
@@ -380,7 +383,8 @@ dockutil --add /Applications/Thunderbird.app --after 'Mail'
 dockutil --add "/Applications/Google Chrome.app" --after 'Thunderbird'
 dockutil --add "/Applications/Brave Browser.app" --after 'Google Chrome'
 dockutil --add "/System/Applications/FaceTime.app" --after 'Messages'
-dockutil --add /Applications/Slack.app --after 'Notes'
+dockutil --add /Applications/Spotify.app --after 'Notes'
+dockutil --add /Applications/Slack.app --after 'Spotify'
 dockutil --add ~/Applications/iTerm.app --after 'Slack'
 
 dockutil --add '/Applications' --view grid --display folder --before 'Downloads'
