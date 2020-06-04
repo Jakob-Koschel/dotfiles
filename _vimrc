@@ -62,7 +62,3 @@ let g:ctrlp_working_path_mode = 'r'
 
 let g:ale_linters = {'javascript': ['eslint', 'tsserver'] }
 let g:ale_fixers = ['prettier', 'eslint']
-
-nmap <silent> <C-]> :ALEGoToDefinition<cr>
-nmap <silent> <C-[> :ALENext<cr>
-nmap <silent> <C-f> :ALEFix<cr>
