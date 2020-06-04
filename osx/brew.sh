@@ -120,7 +120,7 @@ brew cask install \
 
 # font-roboto-mono requires svn, online version is broken (missing /static)
 brew install svn
-brew cask install $DIR/font-roboto-mono.rb
+brew cask install font-roboto-mono-for-powerline
 brew uninstall svn
 
 # start necessary apps
