@@ -45,7 +45,7 @@ special_echo "Setting $HOME/.zsh/path.zsh"
 if [ "$OS_NAME" == "MacOS" ]; then
   ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/zsh/_path.zsh_mac $HOME/.zsh/path.zsh
 elif [ "$OS_NAME" == "Linux" ]; then
-  ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/zsh/_path.zsh_linux $HOME/.zsh/path.zsh
+  grep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/zsh/_path.zsh_linux $HOME/.zsh/path.zsh
 fi
 
 special_echo "Overwriting $HOME/.zshrc"
@@ -70,4 +70,8 @@ special_echo "Install TPM plugins"
 $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 special_echo "Overwriting $HOME/.gitconfig"
-ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/_gitconfig $HOME/.gitconfig
+if [ "$OS_NAME" == "MacOS" ]; then
+  ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/_gitconfig $HOME/.gitconfig
+elif [ "$OS_NAME" == "Linux" ]; then
+  grep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/_gitconfig $HOME/.gitconfig
+fi
