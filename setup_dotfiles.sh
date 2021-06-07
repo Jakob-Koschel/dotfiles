@@ -5,6 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 VUNDLE_GIT_REMOTE="https://github.com/VundleVim/Vundle.vim.git"
 OHMYZSH_GIT_REMOTE="https://github.com/robbyrussell/oh-my-zsh.git"
 TPM_GIT_REMOTE="https://github.com/tmux-plugins/tpm.git"
+DRACULA_ZSH_GIT_REMOTE="https://github.com/dracula/zsh.git"
 
 # Generates colored output.
 function special_echo {
@@ -16,7 +17,7 @@ if [ "$(uname)" == "Darwin" ]; then
   # $DIR/osx/setup.sh
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   OS_NAME="Linux"
-  # $DIR/linux/setup.sh
+  $DIR/linux/setup.sh
 fi
 
 special_echo "Setup Vundle"
@@ -35,6 +36,10 @@ vim +BundleInstall +qall
 special_echo "Setup Oh My Zsh"
 test -d $DIR/_oh_my_zsh || git clone $OHMYZSH_GIT_REMOTE $DIR/_oh_my_zsh
 
+special_echo "Setup Dracula theme"
+git clone $DRACULA_ZSH_GIT_REMOTE $DIR/_dracula
+ln -s $DIR/_dracula/dracula.zsh-theme $DIR/_oh_my_zsh/themes/dracula.zsh-theme
+
 special_echo "Setup $HOME/.oh-my-zsh"
 ln -sfn $DIR/_oh_my_zsh $HOME/.oh-my-zsh
 
@@ -44,8 +49,20 @@ mkdir -p $HOME/.zsh
 special_echo "Setting $HOME/.zsh/path.zsh"
 if [ "$OS_NAME" == "MacOS" ]; then
   ggrep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/zsh/_path.zsh_mac $HOME/.zsh/path.zsh
+  if ggrep GITCRYPT $DIR/_gitconfig
+  then
+    touch $HOME/.zsh/path.zsh
+  else
+    ln -sfn $DIR/zsh/_path.zsh_mac $HOME/.zsh/path.zsh
+  fi
 elif [ "$OS_NAME" == "Linux" ]; then
   grep GITCRYPT $DIR/_gitconfig || ln -sfn $DIR/zsh/_path.zsh_linux $HOME/.zsh/path.zsh
+  if grep GITCRYPT $DIR/_gitconfig
+  then
+    touch $HOME/.zsh/path.zsh
+  else
+    ln -sfn $DIR/zsh/_path.zsh_linux $HOME/.zsh/path.zsh
+  fi
 fi
 
 special_echo "Overwriting $HOME/.zshrc"

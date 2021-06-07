@@ -1,9 +1,6 @@
 # Configure your default shell, Zsh in my case.
 set -g default-shell $SHELL
 
-# Override the default command to use `reattach-to-user-namespace` for everything.
-set -g default-command "reattach-to-user-namespace -l ${SHELL}"
-
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
