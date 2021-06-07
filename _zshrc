@@ -29,9 +29,6 @@ export LC_CTYPE=en_US.UTF-8
 
 export SED=gsed
 
-# use homebrew ssl for ruby
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-
 source $HOME/.zsh/path.zsh
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
