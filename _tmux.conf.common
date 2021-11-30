@@ -40,8 +40,8 @@ bind C-l send-keys 'C-l'
 bind C-k send-keys -R \; clear-history
 
 is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
-bind -n C-v if-shell "$is_vim" "send-keys C-v" "split-window -h"
-bind -n C-s if-shell "$is_vim" "send-keys C-s" "split-window -v"
+bind -n C-v if-shell "$is_vim" "send-keys C-v" 'split-window -h -c "#{pane_current_path}"'
+bind -n C-s if-shell "$is_vim" "send-keys C-s" 'split-window -v -c "#{pane_current_path}"'
 
 bind-key j resize-pane -D 5
 bind-key k resize-pane -U 5

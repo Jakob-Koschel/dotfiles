@@ -6,7 +6,7 @@ ZSH_THEME="dracula"
 
 plugins=(
   git
-  osx
+  macos
   tmux
   react-native
   history
