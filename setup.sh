@@ -19,7 +19,11 @@ PROFILES="default $OS_NAME"
 if [ -s $DOTFILES_ROOT/git-crypt-status ]; then
   read -p "Dotfiles are still encrypted, do you want to decrypt? [yN]: " -n 1 -r; echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    git-crypt unlock
+    if [ ! -e dotfiles-key ]; then
+      echo "store the gpg key in as dotfiles-key"
+      exit 1
+    fi
+    git-crypt unlock dotfiles-key
     PROFILES="$PROFILES $OS_NAME-crypt"
   fi
 else
