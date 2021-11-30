@@ -33,9 +33,9 @@ brew install \
   vim \
   grep \
   bash \
+  zsh \
   `# node` \
   nvm \
-  `# python` \
   python \
   python3 \
   flake8 \
@@ -67,12 +67,14 @@ brew install \
   pandoc \
   weechat \
   wget \
-  z
+  z \
+  dialog \
+  svn # required for font-roboto-mono-for-powerline
 
-# We installed the new shell, now we have to activate it
-echo "Adding the newly installed shell to the list of allowed shells"
-# Prompts for password
-sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+# # We installed the new shell, now we have to activate it
+# echo "Adding the newly installed shell to the list of allowed shells"
+# # Prompts for password
+# sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
 
 # Lxml and Libxslt
 brew install libxml2
@@ -81,52 +83,51 @@ brew link libxml2 --force
 brew link libxslt --force
 
 # Core casks
-brew cask list alfred  || brew cask install --appdir="/Applications" alfred
-brew cask list iterm2  || brew cask install --appdir="~/Applications" iterm2
-brew cask list xquartz || brew cask install --appdir="~/Applications" xquartz
+brew install --cask --appdir="/Applications" alfred
+brew install --cask --appdir="~/Applications" iterm2
+brew install --cask --appdir="~/Applications" xquartz
 
 # Development tool casks
-brew cask list macdown || brew cask install --appdir="/Applications" macdown
+brew install --cask --appdir="/Applications" macdown
 
 # Misc casks
-brew cask list little-snitch      || brew cask install --appdir="/Applications" little-snitch
-brew cask list google-backup-and-sync || brew cask install --appdir="/Applications" google-backup-and-sync
-brew cask list google-chrome      || brew cask install --appdir="/Applications" google-chrome
-brew cask list brave-browser      || brew cask install --appdir="/Applications" brave-browser
-brew cask list karabiner-elements || brew cask install --appdir="/Applications" karabiner-elements
-brew cask list sdformatter        || brew cask install --appdir="/Applications" sdformatter
-brew cask list spotify            || brew cask install --appdir="/Applications" spotify
-brew cask list the-unarchiver     || brew cask install --appdir="/Applications" the-unarchiver
-brew cask list caffeine           || brew cask install --appdir="/Applications" caffeine
-brew cask list spectacle          || brew cask install --appdir="/Applications" spectacle
-brew cask list thunderbird        || brew cask install --appdir="/Applications" thunderbird
-brew cask list vlc                || brew cask install --appdir="/Applications" vlc
-brew cask list visual-studio-code || brew cask install --appdir="/Applications" visual-studio-code
-brew cask list slack              || brew cask install --appdir="/Applications" slack
+brew install --cask --appdir="/Applications" little-snitch
+brew install --cask --appdir="/Applications" google-chrome
+brew install --cask --appdir="/Applications" brave-browser
+brew install --cask --appdir="/Applications" karabiner-elements
+brew install --cask --appdir="/Applications" sdformatter
+brew install --cask --appdir="/Applications" spotify
+brew install --cask --appdir="/Applications" the-unarchiver
+brew install --cask --appdir="/Applications" caffeine
+brew install --cask --appdir="/Applications" spectacle
+brew install --cask --appdir="/Applications" vlc
+brew install --cask --appdir="/Applications" slack
 
-#Remove comment to install LaTeX distribution MacTeX
-brew cask list mactex || brew cask install --appdir="/Applications" mactex
+# VeraCrypt
+# Hidden Bar
+# Atom (for Tabletop Simulator)
+# Docker
+# Jaxx Liberty
+# JDownloader2
+# Signal
+# Steam
+# SURFdrive
+# TeamViewer
+# Telegram
+# Wireguard
+# Zotero
+# Zoom
+# VirtualBox
 
-# Install developer friendly quick look plugins;
-# see https://github.com/sindresorhus/quick-look-plugins
-brew cask install \
-  qlcolorcode \
-  qlstephen \
-  qlmarkdown \
-  quicklook-json \
-  qlprettypatch \
-  quicklook-csv \
-  qlimagesize
+# Remove comment to install LaTeX distribution MacTeX
+brew install --cask --appdir="/Applications" mactex
 
-# font-roboto-mono requires svn, online version is broken (missing /static)
-brew install svn
-brew cask install font-roboto-mono-for-powerline
-brew uninstall svn
+brew install --cask font-roboto-mono-for-powerline
 
-# start necessary apps
-open "/Applications/Alfred 4.app"
-open "/Applications/Caffeine.app"
-open "/Applications/Spectacle.app"
+# # start necessary apps
+# open "/Applications/Alfred 4.app"
+# open "/Applications/Caffeine.app"
+# open "/Applications/Spectacle.app"
 
 # install virtualenvwrapper
 pip3 install virtualenvwrapper
