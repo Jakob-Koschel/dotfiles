@@ -1,0 +1,10 @@
+[user]
+	name = Jakob Koschel
+	email = jakobkoschel@aim.com
+[push]
+	default = current
+[core]
+	editor = vim
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[github]
+	user = Jakob-Koschel
