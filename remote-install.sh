@@ -8,4 +8,4 @@ set -e
 git clone https://github.com/Jakob-Koschel/dotfiles.git
 cd dotfiles
 git checkout zero
-# ./setup.sh
+bash setup.sh
