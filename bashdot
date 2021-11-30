@@ -98,7 +98,17 @@ install() {
   log info "Installing dotfiles from '$profile_dir'."
   cd $symlinks_dir
   for dir in $(ls -d */); do
-    stow "$dir" --target "$HOME" --dotfiles --verbose="1"
+    if ls $dir/*/ &>/dev/null; then
+      log info "$dir has subdirectories"
+      for subdir in $(ls -d $dir*/); do
+        # only stow subdirectories
+        targetdir=$(basename "${subdir/dot-/.}")
+        mkdir -p "$HOME/$targetdir"
+        ( cd $dir && stow $(basename "$subdir") --target "$HOME/$targetdir" --dotfiles --verbose="1" )
+      done
+    else
+      stow "$dir" --target "$HOME" --dotfiles --verbose="1"
+    fi
   done
 
   log debug "Run after scripts."

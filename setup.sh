@@ -14,5 +14,4 @@ fi
 git submodule init && git submodule update
 
 echo "Run $DOTFILES_ROOT/bashdot/bashdot install default $OS_NAME..."
-$DOTFILES_ROOT/bashdot install default
-# $DOTFILES_ROOT/bashdot install default $OS_NAME
+$DOTFILES_ROOT/bashdot install default $OS_NAME
