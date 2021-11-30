@@ -1,2 +1,0 @@
-_gitconfig filter=git-crypt diff=git-crypt
-zsh/** filter=git-crypt diff=git-crypt
