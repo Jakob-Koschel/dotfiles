@@ -2,14 +2,14 @@ cask "mactex-2020.0407" do
   version "2020.0407"
   sha256 "a33af89de36c7c84a76050c9704d50d23892e9c2070f04f6a53e1c6d5a332f67"
 
-  url "http://mirror.ctan.org/systems/mac/mactex/mactex-#{version.no_dots}.pkg",
-      verified: "mirror.ctan.org/systems/mac/mactex/"
+  url "https://mirror.lyrahosting.com/CTAN/systems/mac/mactex/mactex-#{version.no_dots}.pkg",
+      verified: "mirror.lyrahosting.com/CTAN/systems/mac/mactex/"
   name "MacTeX"
   desc "Full TeX Live distribution with GUI applications"
   homepage "https://www.tug.org/mactex/"
 
   livecheck do
-    url "http://mirror.ctan.org/systems/mac/mactex/"
+    url "https://mirror.lyrahosting.com/CTAN/systems/mac/mactex/"
     strategy :page_match do |page|
       match = page.match(/href=.*?mactex-(\d{4})(\d{2})(\d{2})\.pkg/)
       "#{match[1]}.#{match[2]}#{match[3]}"
