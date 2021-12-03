@@ -45,5 +45,6 @@ fi
 
 # make sure that /usr/local/bin is in PATH
 export PATH="/usr/local/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 
 $DOTFILES_ROOT/bashdot install $PROFILES
