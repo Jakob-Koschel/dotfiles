@@ -47,6 +47,7 @@ brew "socat"
 brew "xz"
 # other useful binaries
 brew "ack"
+brew "mackup"
 
 
 # casks
