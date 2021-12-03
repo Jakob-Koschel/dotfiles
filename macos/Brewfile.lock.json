@@ -1771,6 +1771,40 @@
             }
           }
         }
+      },
+      "mas": {
+        "version": "1.8.5",
+        "bottle": {
+          "rebuild": 0,
+          "root_url": "https://ghcr.io/v2/homebrew/core",
+          "files": {
+            "arm64_monterey": {
+              "cellar": ":any_skip_relocation",
+              "url": "https://ghcr.io/v2/homebrew/core/mas/blobs/sha256:433b94f32da9835c0800975a5f8db08c823c4b8c35077db7e2a9763d700f0fbe",
+              "sha256": "433b94f32da9835c0800975a5f8db08c823c4b8c35077db7e2a9763d700f0fbe"
+            },
+            "arm64_big_sur": {
+              "cellar": ":any_skip_relocation",
+              "url": "https://ghcr.io/v2/homebrew/core/mas/blobs/sha256:446af97db6bcb0f44d61e7486d7c74d14325002ff9918dba7a7db3045bf8b07c",
+              "sha256": "446af97db6bcb0f44d61e7486d7c74d14325002ff9918dba7a7db3045bf8b07c"
+            },
+            "monterey": {
+              "cellar": ":any_skip_relocation",
+              "url": "https://ghcr.io/v2/homebrew/core/mas/blobs/sha256:62f08836f3ff705e8b7dd858a5225a0b0bceb39d6bb2340ee469e68ead73a90b",
+              "sha256": "62f08836f3ff705e8b7dd858a5225a0b0bceb39d6bb2340ee469e68ead73a90b"
+            },
+            "big_sur": {
+              "cellar": ":any_skip_relocation",
+              "url": "https://ghcr.io/v2/homebrew/core/mas/blobs/sha256:18fd65b45ff112ca5c80a31202688617a22dec56b28bbb93cf4bdb6ed2d73d56",
+              "sha256": "18fd65b45ff112ca5c80a31202688617a22dec56b28bbb93cf4bdb6ed2d73d56"
+            },
+            "catalina": {
+              "cellar": ":any_skip_relocation",
+              "url": "https://ghcr.io/v2/homebrew/core/mas/blobs/sha256:29d2d552d09ef893c3560d94a01c2985bb53b2e9499400987ad76c9b50b9f0f9",
+              "sha256": "29d2d552d09ef893c3560d94a01c2985bb53b2e9499400987ad76c9b50b9f0f9"
+            }
+          }
+        }
       }
     },
     "cask": {
@@ -1881,6 +1915,53 @@
         "options": {
           "full_name": "mactex-2020.0407.rb"
         }
+      },
+      "signal": {
+        "version": "5.25.0",
+        "options": {
+          "full_name": "signal"
+        }
+      },
+      "telegram": {
+        "version": "8.2,223044",
+        "options": {
+          "full_name": "telegram"
+        }
+      },
+      "zotero": {
+        "version": "5.0.96.3",
+        "options": {
+          "full_name": "zotero"
+        }
+      },
+      "hiddenbar": {
+        "version": "1.8",
+        "options": {
+          "full_name": "hiddenbar"
+        }
+      },
+      "zoom": {
+        "version": "5.8.6.2879",
+        "options": {
+          "full_name": "zoom"
+        }
+      },
+      "docker": {
+        "version": "4.3.0,71786",
+        "options": {
+          "full_name": "docker"
+        }
+      }
+    },
+    "tap": {
+      "homebrew/cask-fonts": {
+        "revision": "6f900cab61eebbf82286fe47239b826df9c09e02"
+      }
+    },
+    "mas": {
+      "WireGuard": {
+        "id": "1451685025",
+        "version": "1.0.15"
       }
     }
   },
