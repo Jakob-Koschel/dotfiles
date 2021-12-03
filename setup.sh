@@ -37,10 +37,10 @@ if [ -s $DOTFILES_ROOT/git-crypt-status ]; then
       exit 1
     fi
     git-crypt unlock dotfiles-key
-    PROFILES="$PROFILES $OS_NAME-crypt"
+    PROFILES="$PROFILES $OS_NAME-crypt default-crypt"
   fi
 else
-  PROFILES="$PROFILES $OS_NAME-crypt"
+  PROFILES="$PROFILES $OS_NAME-crypt default-crypt"
 fi
 
 # make sure that /usr/local/bin is in PATH
