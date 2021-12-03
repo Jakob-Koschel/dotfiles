@@ -26,7 +26,7 @@ fi
 git submodule init && git submodule update
 
 echo "Run $DOTFILES_ROOT/bashdot/bashdot install default $OS_NAME..."
-PROFILES="default $OS_NAME"
+PROFILES="$OS_NAME default"
 
 # check if repo is still locked and should be unlocked
 if [ -s $DOTFILES_ROOT/git-crypt-status ]; then

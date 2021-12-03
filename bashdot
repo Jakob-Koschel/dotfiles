@@ -89,7 +89,7 @@ install() {
   if [ -e "$before_dir" ]; then
     for file in $(ls "$before_dir"); do
         log info "Run $file script."
-        $before_dir/$file
+        (cd $before_dir && ./$file)
     done
   else
     log debug "$profile doesn't have before scripts"
@@ -103,7 +103,7 @@ install() {
         # only stow subdirectories
         targetdir=$(basename "${subdir/dot-/.}")
         mkdir -p "$HOME/$targetdir"
-        ( cd $dir && stow $(basename "$subdir") --target "$HOME/$targetdir" --dotfiles --verbose="1" )
+        (cd $dir && stow $(basename "$subdir") --target "$HOME/$targetdir" --dotfiles --verbose="1")
       done
     else
       stow "$dir" --target "$HOME" --dotfiles --verbose="1"
@@ -114,7 +114,7 @@ install() {
   if [ -e "$after_dir" ]; then
     for file in $(ls "$after_dir"); do
         log info "Run $file script."
-        $after_dir/$file
+        (cd $after_dir && ./$file)
     done
   else
     log debug "$profile doesn't have after scripts"

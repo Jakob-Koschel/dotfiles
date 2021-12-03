@@ -1821,15 +1821,21 @@
         "options": {
           "full_name": "font-roboto-mono-for-powerline"
         }
+      },
+      "mactex-2020.0407.rb": {
+        "version": null,
+        "options": {
+          "full_name": "mactex-2020.0407.rb"
+        }
       }
     }
   },
   "system": {
     "macos": {
       "monterey": {
-        "HOMEBREW_VERSION": "3.3.6",
+        "HOMEBREW_VERSION": "3.3.6-51-gc75aaed",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "2be09b273add2a7e922957de3c8253723e59d0c1",
+        "Homebrew/homebrew-core": "5f7d01c7570fb81f56bacd98f98d44f97acba8d0",
         "CLT": "13.1.0.0.1.1633545042",
         "Xcode": "13.1",
         "macOS": "12.0.1"
