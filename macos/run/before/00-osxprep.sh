@@ -16,6 +16,10 @@ sudo softwareupdate -ia --verbose
 # Install only recommended available updates
 #sudo softwareupdate -ir --verbose
 
+if [[ $(uname -p) == 'arm' ]]; then
+  sudo softwareupdate --install-rosetta
+fi
+
 echo "------------------------------"
 echo "Installing Xcode Command Line Tools."
 # Install Xcode command line tools
