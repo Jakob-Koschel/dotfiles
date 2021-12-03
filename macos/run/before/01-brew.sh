@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Check for Homebrew,
 # Install if necessary
 if ! command -v brew >/dev/null; then
