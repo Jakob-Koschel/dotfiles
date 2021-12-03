@@ -47,6 +47,7 @@ brew "xz"
 # other useful binaries
 brew "ack"
 
+
 # casks
 cask "alfred"
 cask "iterm2"
@@ -64,4 +65,6 @@ cask "spectacle"
 cask "vlc"
 cask "slack"
 cask "mactex-2020.0407.rb"
+
+tap "homebrew/cask-fonts"
 cask "font-roboto-mono-for-powerline"
