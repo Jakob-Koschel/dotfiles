@@ -58,6 +58,13 @@ dockutil --remove "Keynote"
 dockutil --remove "Numbers"
 dockutil --remove "Pages"
 
+if dockutil --find "Mail"; then
+  dockutil --move "Mail" --position 'first'
+fi
+if dockutil --find "Calendar"; then
+  dockutil --move "Calendar" --after 'Mail'
+fi
+
 if dockutil --find "Google Chrome"; then
   dockutil --move "Google Chrome" --after 'Calendar'
 else
