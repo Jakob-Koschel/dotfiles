@@ -51,6 +51,7 @@ dockutil --remove "Reminders"
 dockutil --remove "Contacts"
 dockutil --remove "Music"
 dockutil --remove "Podcasts"
+dockutil --remove "News"
 dockutil --remove "TV"
 dockutil --remove "App Store"
 
@@ -82,7 +83,7 @@ fi
 if dockutil --find "iTerm"; then
   dockutil --move "iTerm" --after 'Slack'
 else
-  dockutil --add ~/Applications/iTerm.app --after 'Slack'
+  dockutil --add /Applications/iTerm.app --after 'Slack'
 fi
 
 if dockutil --find "Applications"; then
