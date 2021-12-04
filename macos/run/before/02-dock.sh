@@ -54,6 +54,9 @@ dockutil --remove "Podcasts"
 dockutil --remove "News"
 dockutil --remove "TV"
 dockutil --remove "App Store"
+dockutil --remove "Keynote"
+dockutil --remove "Numbers"
+dockutil --remove "Pages"
 
 if dockutil --find "Google Chrome"; then
   dockutil --move "Google Chrome" --after 'Calendar'
