@@ -15,6 +15,9 @@ brew update
 # Upgrade any already-installed formulae.
 brew upgrade
 
+# Upgrade Mac App Store apps
+mas upgrade
+
 # Install
 (cd $(PWD)/../../ && brew bundle)
 
