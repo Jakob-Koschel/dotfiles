@@ -17,7 +17,9 @@ sudo softwareupdate -ia --verbose
 #sudo softwareupdate -ir --verbose
 
 if [[ $(uname -p) == 'arm' ]]; then
-  sudo softwareupdate --install-rosetta
+  if ! /usr/bin/pgrep oahd >/dev/null 2>&1; then
+    sudo softwareupdate --install-rosetta
+  fi
 fi
 
 echo "------------------------------"
