@@ -66,7 +66,7 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
 # Enable snap-to-grid for icons on the desktop and in other icon views
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-if [ /usr/libexec/PlistBuddy -c "Print :FK_StandardViewSettings:IconViewSettings:arrangeBy" ~/Library/Preferences/com.apple.finder.plist]; then
+if /usr/libexec/PlistBuddy -c "Print :FK_StandardViewSettings:IconViewSettings:arrangeBy" ~/Library/Preferences/com.apple.finder.plist; then
   /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 else
   /usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
