@@ -22,10 +22,13 @@ defaults write NSGlobalDomain AppleMetricUnits -bool true
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+# TODO: add other keyboards
+
 # Disable shortcut to change input source (in favor of opening iTerm hotkey window)
 /usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c \
   "Set AppleSymbolicHotKeys:60:enabled false"
 /usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c \
   "Set AppleSymbolicHotKeys:61:enabled false"
 
-# TODO: change spotlight shortcut
+# change spotlight shortcut
+/usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c "Set AppleSymbolicHotKeys:64:value:parameters:2 524288"
