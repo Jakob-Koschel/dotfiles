@@ -8,8 +8,26 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until `osxprep.sh` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+if [ -e $(PWD)/../../hostname ]; then
+  HOSTNAME=$(<$(PWD)/../../hostname)
+  # Set computer name (as done via System Preferences → Sharing)
+  sudo scutil --set ComputerName "$HOSTNAME"
+  sudo scutil --set HostName "$HOSTNAME"
+  sudo scutil --set LocalHostName "$HOSTNAME"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOSTNAME"
+fi
+
 # set dark mode
 defaults write "Apple Global Domain" "AppleInterfaceStyle" "Dark"
+
+# Set the timezone; see `sudo systemsetup -listtimezones` for other values
+sudo systemsetup -settimezone "Europe/Berlin" > /dev/null
+
+# Set standby delay to 24 hours (default is 1 hour or 3600)
+sudo pmset -a standbydelay 900
+# Set sleep to 15 minutes
+sudo pmset -a displaysleep 15
+sudo pmset -a sleep 15
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
@@ -60,6 +78,13 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 ###############################################################################
+# Bluetooth                                                                   #
+###############################################################################
+
+# Increase sound quality for Bluetooth headphones/headsets
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 80
+
+###############################################################################
 # Screen                                                                      #
 ###############################################################################
 
@@ -75,6 +100,9 @@ defaults write com.apple.screencapture type -string "png"
 
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
+
+# Enable subpixel font rendering on non-Apple LCDs
+defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
 ###############################################################################
 # Time Machine                                                                #
