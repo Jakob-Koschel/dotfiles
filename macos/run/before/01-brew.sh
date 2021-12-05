@@ -15,11 +15,11 @@ brew update
 # Upgrade any already-installed formulae.
 brew upgrade
 
-# Upgrade Mac App Store apps
-mas upgrade
-
 # Install
 (cd $(PWD)/../../ && brew bundle)
+
+# Upgrade Mac App Store apps
+mas upgrade
 
 # Remove outdated versions from the cellar.
 brew cleanup
