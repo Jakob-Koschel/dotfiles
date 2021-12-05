@@ -105,7 +105,7 @@ defaults write com.apple.finder EmptyTrashSecurely -bool true
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Show the ~/Library folder
-chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
+chflags nohidden ~/Library && (xattr -d com.apple.FinderInfo ~/Library || true)
 
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
@@ -117,11 +117,12 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
     OpenWith -bool true \
     Privileges -bool true
 
-# TODO: fix this (have dependencies installed)
-# source `which virtualenvwrapper.sh`
-# mkvirtualenv finder-sidebar-editor
-# workon finder-sidebar-editor
-# pip3 install finder-sidebar-editor
-# python3 $DIR/finder-sidebar-editor.py
-# deactivate
-# rmvirtualenv finder-sidebar-editor
+# TODO: check if this works
+source `which virtualenvwrapper.sh`
+# somehow mkvirtualenv fails with set -e enabled
+set +e; mkvirtualenv finder-sidebar-editor; set -e;
+workon finder-sidebar-editor
+pip3 install finder-sidebar-editor
+python3 $(PWD)/../../finder-sidebar-editor.py
+deactivate
+rmvirtualenv finder-sidebar-editor

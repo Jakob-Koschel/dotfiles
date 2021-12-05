@@ -2,6 +2,8 @@
 
 set -e
 
+# TODO: test if everything is there
+
 defaults write com.apple.systemuiserver "NSStatusItem Visible Siri" -int 0
 defaults write com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.TimeMachine" -int 0
 
