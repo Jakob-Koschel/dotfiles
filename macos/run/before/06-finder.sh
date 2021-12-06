@@ -124,6 +124,7 @@ source `which virtualenvwrapper.sh`
 set +e; mkvirtualenv finder-sidebar-editor; set -e;
 workon finder-sidebar-editor
 pip3 install finder-sidebar-editor
+mkdir -p $HOME/Developer
 python3 $(PWD)/../../finder-sidebar-editor.py
 deactivate
 rmvirtualenv finder-sidebar-editor
