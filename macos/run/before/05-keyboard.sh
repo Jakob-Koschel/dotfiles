@@ -31,4 +31,8 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
   "Set AppleSymbolicHotKeys:61:enabled false"
 
 # change spotlight shortcut
-/usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c "Set AppleSymbolicHotKeys:64:value:parameters:2 524288"
+if /usr/libexec/PlistBuddy -c "Print AppleSymbolicHotKeys:64:value:parameters:2" ~/Library/Preferences/com.apple.symbolichotkeys.plist; then
+  /usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c "Set AppleSymbolicHotKeys:64:value:parameters:2 524288"
+else
+  /usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c "Add AppleSymbolicHotKeys:64:value:parameters:2 integer 524288"
+fi
