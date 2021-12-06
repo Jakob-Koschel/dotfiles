@@ -118,6 +118,7 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
     Privileges -bool true
 
 # TODO: check if this works
+export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 source `which virtualenvwrapper.sh`
 # somehow mkvirtualenv fails with set -e enabled
 set +e; mkvirtualenv finder-sidebar-editor; set -e;
