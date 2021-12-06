@@ -8,6 +8,13 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until `osxprep.sh` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+if [ ! -e $(PWD)/../../hostname ]; then
+  read -p "hostname does not exist, do you want to create it? [yN]: " -n 1 -r; echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    read -p "hostname: " line
+    echo "$line" > $(PWD)/../../hostname
+  fi
+fi
 if [ -e $(PWD)/../../hostname ]; then
   HOSTNAME=$(<$(PWD)/../../hostname)
   # Set computer name (as done via System Preferences → Sharing)
