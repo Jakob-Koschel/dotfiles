@@ -27,6 +27,8 @@ fi
 # set dark mode
 defaults write "Apple Global Domain" "AppleInterfaceStyle" "Dark"
 
+# TODO: require password immediately after sleep
+
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
 sudo systemsetup -settimezone "Europe/Berlin" > /dev/null
 
