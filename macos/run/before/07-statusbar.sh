@@ -20,6 +20,8 @@ defaults write com.apple.systemuiserver menuExtras -array \
       "/System/Library/CoreServices/Menu Extras/Battery.menu" \
       "/System/Library/CoreServices/Menu Extras/Clock.menu"
 
+# TODO: bluetooth now lives in 'Library/Preferences/com.apple.controlcenter.plist'
+
 # show the percentage of battery
 defaults write com.apple.menuextra.battery ShowPercent YES
 
