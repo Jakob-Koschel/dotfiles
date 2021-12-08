@@ -36,6 +36,9 @@ set formatoptions=qrn1
 set wrapmargin=0
 set colorcolumn=+1
 
+" latex files should only have a width of 80
+autocmd Filetype tex set textwidth=80
+
 " Numbers
 set number
 set numberwidth=5

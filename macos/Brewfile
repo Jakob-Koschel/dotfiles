@@ -48,6 +48,7 @@ brew "xz"
 # other useful binaries
 brew "ack"
 brew "mackup"
+brew "pygments"
 
 
 # casks
