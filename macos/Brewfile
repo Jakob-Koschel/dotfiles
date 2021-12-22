@@ -49,6 +49,7 @@ brew "xz"
 brew "ack"
 brew "mackup"
 brew "pygments"
+brew "rclone"
 
 
 # casks
