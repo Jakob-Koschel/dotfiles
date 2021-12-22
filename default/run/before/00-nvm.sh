@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+set -e
+
+if [ -n $NVM_DIR ]; then
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
+# Check for nvm,
+# Install if necessary
+if ! command -v nvm >/dev/null; then
+  echo "Installing nvm..."
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+fi
+
+nvm install node
+nvm use node
