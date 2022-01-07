@@ -14,5 +14,5 @@ if ! command -v nvm >/dev/null; then
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 fi
 
-nvm install node
-nvm use node
+nvm install --lts --default
+nvm use --lts

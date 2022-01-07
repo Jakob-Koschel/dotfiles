@@ -11,6 +11,8 @@ brew "bash"
 brew "zsh"
 brew "mas"
 brew "nvm"
+brew "watchman"
+brew "ruby"
 brew "python"
 brew "python3"
 brew "flake8"
@@ -74,9 +76,12 @@ cask "zotero"
 cask "hiddenbar"
 cask "zoom"
 cask "docker"
+cask "adoptopenjdk/openjdk/adoptopenjdk8"
+cask "android-commandlinetools"
 cask "mactex-2020.0407.rb"
 
 tap "homebrew/cask-fonts"
 cask "font-roboto-mono-for-powerline"
 
 mas "WireGuard", id: 1451685025
+mas "Xcode", id: 497799835

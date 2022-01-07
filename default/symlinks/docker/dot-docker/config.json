@@ -1,5 +1,5 @@
 {
-  "detachKeys": "ctrl-@",
+  "detachKeys": "ctrl-@,ctrl-@",
   "auths" : {
 
   },
