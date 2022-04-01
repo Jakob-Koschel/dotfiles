@@ -11,12 +11,14 @@ plugins=(
   history
   z
   gitfast
-  task
+  # task
 )
 
 source $ZSH/oh-my-zsh.sh
 
-source ~/.iterm2_shell_integration.zsh
+if [ -f ~/.iterm2_shell_integration.zsh ]; then
+  source ~/.iterm2_shell_integration.zsh
+fi
 
 autoload -U compinit && compinit
 zmodload -i zsh/complist
