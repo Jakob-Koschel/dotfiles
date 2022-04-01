@@ -11,9 +11,12 @@ plugins=(
   history
   z
   gitfast
+  task
 )
 
 source $ZSH/oh-my-zsh.sh
+
+source ~/.iterm2_shell_integration.zsh
 
 autoload -U compinit && compinit
 zmodload -i zsh/complist
@@ -35,6 +38,9 @@ source $HOME/.zsh/path.zsh
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 alias rssh='rsync --progress -avz -e "ssh"'
+
+# syntax highlighted cat
+alias ccat='pygmentize -g -O style=native'
 
 # nvm
 export NVM_DIR=$HOME/.nvm
