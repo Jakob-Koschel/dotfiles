@@ -13,6 +13,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'tpope/vim-tbone'
 Plugin 'dracula/vim', { 'name': 'dracula' }
 Plugin 'editorconfig/editorconfig-vim'
 
@@ -53,6 +55,9 @@ nnoremap <CR> o
 
 "Use mac clipboard
 set clipboard=unnamed
+
+" use zsh internally
+set shell=zsh
 
 "ctrl-n autocomplete keybindings
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
