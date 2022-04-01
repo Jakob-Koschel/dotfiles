@@ -16,11 +16,16 @@ brew "ruby"
 brew "python"
 brew "python3"
 brew "flake8"
+brew "cmake"
 brew "ctags"
 brew "curl"
 brew "dark-mode"
 brew "diff-so-fancy"
-brew "dockutil"
+
+# TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
+# brew "dockutil"
+brew "dockutil.rb"
+
 brew "git"
 brew "git-crypt"
 brew "hexedit"
