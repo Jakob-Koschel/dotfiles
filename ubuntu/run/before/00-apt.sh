@@ -10,6 +10,7 @@ sudo apt-get install -y \
 	git \
 	curl \
 	tmux \
+	python3 \
 	time \
 	build-essential \
 	sudo
