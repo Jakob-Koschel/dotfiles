@@ -9,6 +9,12 @@ if [ "$(uname)" == "Darwin" ]; then
 	OS_NAME="macos"
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	OS_NAME="ubuntu"
+
+  # check if stow is installed
+  if ! command -v stow &> /dev/null
+  then
+    sudo apt update && sudo apt install -y stow
+  fi
 fi
 
 # check if remote is using HTTPS, if so offer replacment with SSH
