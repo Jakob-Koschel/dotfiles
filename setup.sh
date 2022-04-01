@@ -8,7 +8,7 @@ DOTFILES_ROOT=$(pwd -P)
 if [ "$(uname)" == "Darwin" ]; then
 	OS_NAME="macos"
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	OS_NAME="linux"
+	OS_NAME="ubuntu"
 fi
 
 # check if remote is using HTTPS, if so offer replacment with SSH
