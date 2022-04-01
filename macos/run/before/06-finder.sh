@@ -105,7 +105,7 @@ defaults write com.apple.finder EmptyTrashSecurely -bool true
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Show the ~/Library folder
-chflags nohidden ~/Library && (xattr -d com.apple.FinderInfo ~/Library || true)
+sudo chflags nohidden ~/Library
 
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
