@@ -43,20 +43,48 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock expose-group-by-app -bool false
 
 # Modify dock items
-dockutil --remove "Launchpad"
-dockutil --remove "Safari"
-dockutil --remove "Maps"
-dockutil --remove "Photos"
-dockutil --remove "Reminders"
-dockutil --remove "Contacts"
-dockutil --remove "Music"
-dockutil --remove "Podcasts"
-dockutil --remove "News"
-dockutil --remove "TV"
-dockutil --remove "App Store"
-dockutil --remove "Keynote"
-dockutil --remove "Numbers"
-dockutil --remove "Pages"
+if dockutil --find "Launchpad"; then
+  dockutil --remove "Launchpad"
+fi
+if dockutil --find "Safari"; then
+  dockutil --remove "Safari"
+fi
+if dockutil --find "Maps"; then
+  dockutil --remove "Maps"
+fi
+if dockutil --find "Photos"; then
+  dockutil --remove "Photos"
+fi
+if dockutil --find "Reminders"; then
+  dockutil --remove "Reminders"
+fi
+if dockutil --find "Contacts"; then
+  dockutil --remove "Contacts"
+fi
+if dockutil --find "Music"; then
+  dockutil --remove "Music"
+fi
+if dockutil --find "Podcasts"; then
+  dockutil --remove "Podcasts"
+fi
+if dockutil --find "News"; then
+  dockutil --remove "News"
+fi
+if dockutil --find "TV"; then
+  dockutil --remove "TV"
+fi
+if dockutil --find "App Store"; then
+  dockutil --remove "App Store"
+fi
+if dockutil --find "Keynote"; then
+  dockutil --remove "Keynote"
+fi
+if dockutil --find "Numbers"; then
+  dockutil --remove "Numbers"
+fi
+if dockutil --find "Pages"; then
+  dockutil --remove "Pages"
+fi
 
 if dockutil --find "Mail"; then
   dockutil --move "Mail" --position 'first'
