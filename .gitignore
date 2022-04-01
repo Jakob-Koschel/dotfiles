@@ -1,5 +1,6 @@
 dotfiles-key
 hostname
+.config
 
 # General
 .DS_Store
