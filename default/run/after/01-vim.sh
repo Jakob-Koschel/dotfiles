@@ -10,4 +10,6 @@ fi
 
 vim +BundleInstall +qall
 
-cd ~/.vim/bundle/YouCompleteMe && ./install.py --clangd-completer
+if [ ! -e $HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core*.so ]; then
+  cd $HOME/.vim/bundle/YouCompleteMe && ./install.py --clangd-completer
+fi
