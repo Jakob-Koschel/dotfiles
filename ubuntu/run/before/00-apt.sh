@@ -11,6 +11,7 @@ sudo apt-get install -y \
   curl \
   tmux \
   python3 \
+  python3-dev \
   clang \
   llvm \
   cmake \
