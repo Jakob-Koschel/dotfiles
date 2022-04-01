@@ -4,13 +4,15 @@ set -e
 
 sudo apt-get update
 sudo apt-get install -y \
-	wget \
-	zsh \
-	vim \
-	git \
-	curl \
-	tmux \
-	python3 \
-	time \
-	build-essential \
-	sudo
+  wget \
+  zsh \
+  vim \
+  git \
+  curl \
+  tmux \
+  python3 \
+  clang \
+  llvm \
+  time \
+  build-essential \
+  sudo

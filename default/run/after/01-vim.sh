@@ -9,3 +9,5 @@ if [ ! -e $HOME/.vim/bundle/Vundle.vim ]; then
 fi
 
 vim +BundleInstall +qall
+
+cd ~/.vim/bundle/YouCompleteMe && ./install.py --clangd-completer
