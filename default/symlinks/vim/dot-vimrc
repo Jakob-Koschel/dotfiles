@@ -56,6 +56,9 @@ nnoremap <CR> o
 "Use mac clipboard
 set clipboard=unnamed
 
+"Use UTF-8 for YouCompleteMe
+set encoding=utf-8
+
 " use zsh internally
 set shell=zsh
 
