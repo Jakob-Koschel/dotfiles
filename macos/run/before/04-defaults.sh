@@ -27,6 +27,9 @@ fi
 # set dark mode
 defaults write "Apple Global Domain" "AppleInterfaceStyle" "Dark"
 
+# TODO: I think this doens't work anymore :/
+defaults write -g AppleICUNumberSymbols -dict 0 ',' 1 '.' 10 ',' 17 '.'
+
 # TODO: require password immediately after sleep
 
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
@@ -39,7 +42,8 @@ sudo pmset -a displaysleep 15
 sudo pmset -a sleep 15
 
 # Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
+sudo nvram SystemAudioVolume=%80
+sudo nvram StartupMute=%01
 
 # Set sidebar icon size to medium
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
@@ -79,12 +83,6 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-
-# Disable smart quotes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-
-# Disable smart dashes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 ###############################################################################
 # Bluetooth                                                                   #
