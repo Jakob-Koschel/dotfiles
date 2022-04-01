@@ -13,6 +13,7 @@ sudo apt-get install -y \
   python3 \
   clang \
   llvm \
+  cmake \
   time \
   build-essential \
   sudo
