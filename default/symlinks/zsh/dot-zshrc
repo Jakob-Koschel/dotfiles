@@ -31,8 +31,6 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-export SED=gsed
-
 # /opt/homebrew/bin is not loaded by default make sure it is always there
 export PATH=/opt/homebrew/bin:$PATH
 source $HOME/.zsh/path.zsh
