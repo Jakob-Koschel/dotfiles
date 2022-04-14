@@ -3,9 +3,9 @@
 set -e
 
 # fixes issues with cocoapods by forcing usage of the brew version
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export PATH="$(brew --prefix)/opt/ruby/bin:$PATH"
+export LDFLAGS="-L$(brew --prefix)/opt/ruby/lib"
+export CPPFLAGS="-I$(brew --prefix)/opt/ruby/include"
 
 gem install ffi
 
