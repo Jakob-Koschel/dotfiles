@@ -80,7 +80,7 @@ cask "zotero"
 cask "hiddenbar"
 cask "zoom"
 cask "docker"
-cask "mactex-2020.0407.rb"
+cask "mactex"
 
 tap "homebrew/cask-fonts"
 cask "font-roboto-mono-for-powerline"
