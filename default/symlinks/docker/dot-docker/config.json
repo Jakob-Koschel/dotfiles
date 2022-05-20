@@ -2,6 +2,5 @@
   "detachKeys": "ctrl-@,ctrl-@",
   "auths" : {
 
-  },
-  "credsStore" : "desktop"
+  }
 }
