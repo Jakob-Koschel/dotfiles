@@ -17,6 +17,7 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'tpope/vim-tbone'
 Plugin 'dracula/vim', { 'name': 'dracula' }
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'bogado/file-line'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
