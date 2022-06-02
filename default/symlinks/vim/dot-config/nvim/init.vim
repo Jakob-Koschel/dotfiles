@@ -26,7 +26,9 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-tbone'
-Plug 'editorconfig/editorconfig-vim'
+Plug 'roxma/vim-tmux-clipboard'
+
+" make vim understand file:line
 Plug 'wsdjeg/vim-fetch'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
