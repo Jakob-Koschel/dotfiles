@@ -101,7 +101,8 @@ nmap <Leader>f [fzf-p]
 xmap <Leader>f [fzf-p]
 
 " mimic CtrlP
-nmap <C-P> :CocCommand fzf-preview.FromResources project_mru git<CR>
+" nmap <C-P> :CocCommand fzf-preview.FromResources project_mru git<CR>
+nmap <C-P> :CocCommand fzf-preview.GitFiles<CR>
 
 nnoremap <silent> [fzf-p]p     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
 nnoremap <silent> [fzf-p]gs    :<C-u>CocCommand fzf-preview.GitStatus<CR>
