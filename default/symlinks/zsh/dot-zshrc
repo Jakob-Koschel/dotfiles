@@ -39,8 +39,14 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 alias rssh='rsync --progress -avz -e "ssh"'
 
+# make nvim the default vim
+alias vim='nvim'
+alias vi='nvim'
+
 # syntax highlighted cat
 alias ccat='pygmentize -g -O style=native'
+
+export EDITOR="nvim"
 
 # nvm
 export NVM_DIR=$HOME/.nvm
