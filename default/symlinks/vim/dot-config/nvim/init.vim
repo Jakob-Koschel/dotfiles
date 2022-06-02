@@ -102,11 +102,18 @@ nmap <Leader>f [fzf-p]
 xmap <Leader>f [fzf-p]
 
 let s:fzf_preview_current_preview = ''
-let s:valid_fzf_previews = ['GitFiles', 'GitStatus']
+let s:valid_fzf_previews = [
+\ 'FZF',
+\ 'FzfPreviewProjectFiles',
+\ 'FzfPreviewGitFilesRpc',
+\ 'FzfPreviewFromResourcesRpc project_mru git',
+\ 'FzfPreviewProjectGrepRpc rg',
+\ 'FzfPreviewGitStatusRpc'
+\ ]
 function! <SID>fzf_preview_open(command) abort
   if index(s:valid_fzf_previews, a:command) >= 0
     let s:fzf_preview_current_preview = a:command
-    execute "FzfPreview" . a:command . "Rpc"
+    execute a:command
   endif
 endfunction
 
@@ -125,7 +132,7 @@ function! <SID>fzf_preview_toggle_next_preview() abort
 endfunction
 
 " mimic CtrlP
-nmap <C-P> :call <SID>fzf_preview_open('GitFiles')<CR>
+nmap <C-P> :call <SID>fzf_preview_open('FZF')<CR>
 " toggle to next preview
 autocmd FileType fzf tnoremap <silent> <C-P> <C-\><C-n>:call <SID>fzf_preview_toggle_next_preview()<CR>
 
