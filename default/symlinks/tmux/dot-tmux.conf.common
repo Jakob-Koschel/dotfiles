@@ -1,5 +1,7 @@
 # Configure your default shell, Zsh in my case.
 set -g default-shell $SHELL
+# fix breaking issues on mac with backspace creating spaces
+set -g default-terminal "xterm-256color"
 
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
