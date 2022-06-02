@@ -34,6 +34,9 @@ set -g history-limit 10000
 # Use vim keybindings in copy mode
 setw -g mode-keys vi
 
+# reload tmux config
+bind r source-file ~/.tmux.conf \; display ".tmux.conf reloaded!"
+
 #  clear screen
 bind C-l send-keys 'C-l'
 
