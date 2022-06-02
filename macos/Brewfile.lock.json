@@ -2174,7 +2174,7 @@
         }
       },
       "signal": {
-        "version": "5.44.1",
+        "version": "5.45.0",
         "options": {
           "full_name": "signal"
         }
@@ -2259,9 +2259,9 @@
   "system": {
     "macos": {
       "monterey": {
-        "HOMEBREW_VERSION": "3.4.11-177-g20c845d",
+        "HOMEBREW_VERSION": "3.4.11-186-ge983c82",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "6857db95798c40ac25708be66c29ab9f8a9120b9",
+        "Homebrew/homebrew-core": "2f08213e7e60d1b557a716e39725ab3bd8c86035",
         "CLT": "13.4.0.0.1.1651278267",
         "Xcode": "13.4",
         "macOS": "12.4"
