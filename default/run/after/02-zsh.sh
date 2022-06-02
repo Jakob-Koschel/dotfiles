@@ -2,8 +2,9 @@
 
 set -e
 
-OHMYZSH_GIT_REMOTE="https://github.com/robbyrussell/oh-my-zsh.git"
-
-if [ ! -e $HOME/.oh-my-zsh ]; then
-  git clone $OHMYZSH_GIT_REMOTE $HOME/.oh-my-zsh
+if [ ! -e $HOME/.zplug ]; then
+  echo "Installing zplug..."
+  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+else
+  zsh -ic "ZPLUG_PIPE_FIX=true zplug update"
 fi
