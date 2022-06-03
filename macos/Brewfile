@@ -85,6 +85,7 @@ cask "hiddenbar"
 cask "zoom"
 cask "docker"
 cask "mactex"
+cask "vimr"
 
 tap "homebrew/cask-fonts"
 cask "font-roboto-mono-for-powerline"

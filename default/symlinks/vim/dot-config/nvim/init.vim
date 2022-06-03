@@ -98,3 +98,6 @@ let g:fzf_preview_command = 'bat --color=always --plain {-1}' "
 
 " mimic CtrlP
 nmap <C-P> :FZF<CR>
+
+" set background black for VimR
+highlight Normal guibg=black guifg=white
