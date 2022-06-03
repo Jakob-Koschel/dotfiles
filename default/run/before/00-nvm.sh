@@ -23,3 +23,4 @@ fi
 
 nvm install --lts --default
 nvm use --lts
+nvm alias default 'lts/*'
