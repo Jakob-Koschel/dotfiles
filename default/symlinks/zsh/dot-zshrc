@@ -25,6 +25,11 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load
 
+# enable history
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+
 if [ -f ~/.iterm2_shell_integration.zsh ]; then
   source ~/.iterm2_shell_integration.zsh
 fi
