@@ -23,6 +23,9 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
 
+" keep session files to restore sessions after tmux restart
+Plug 'tpope/vim-obsession'
+
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-tbone'
 Plug 'roxma/vim-tmux-clipboard'
@@ -101,3 +104,12 @@ nmap <C-P> :FZF<CR>
 
 " set background black for VimR
 highlight Normal guibg=black guifg=white
+
+" if Session.vim exists, please restore it
+fu! RestoreSession()
+if filereadable(getcwd() . '/Session.vim')
+    execute 'so ' . getcwd() . '/Session.vim'
+endif
+endfunction
+
+autocmd VimEnter * nested if eval("@%") == "" | call RestoreSession() | endif
