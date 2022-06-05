@@ -2204,7 +2204,7 @@
         }
       },
       "docker": {
-        "version": "4.8.2,79419",
+        "version": "4.9.0,80466",
         "options": {
           "full_name": "docker"
         }
@@ -2248,7 +2248,7 @@
     },
     "tap": {
       "homebrew/cask-fonts": {
-        "revision": "97f107179dd6e6914ca0eefd704bc86a9dfa61a7"
+        "revision": "f681e61bbd8ff63f1dd6bf404c65db36b31daaad"
       }
     },
     "mas": {
@@ -2265,11 +2265,11 @@
   "system": {
     "macos": {
       "monterey": {
-        "HOMEBREW_VERSION": "3.4.11-198-ge8fcb6a",
+        "HOMEBREW_VERSION": "3.4.11-216-g6b3eb93",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "4448a49d61941d56af39a5a9b11213e93a59ca94",
+        "Homebrew/homebrew-core": "1f3aa366db0b99127ab1b089d8daa465083bec48",
         "CLT": "13.4.0.0.1.1651278267",
-        "Xcode": "13.4",
+        "Xcode": "13.4.1",
         "macOS": "12.4"
       }
     }
