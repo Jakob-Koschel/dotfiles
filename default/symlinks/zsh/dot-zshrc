@@ -31,7 +31,7 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 
 if [ -f ~/.iterm2_shell_integration.zsh ]; then
-  source ~/.iterm2_shell_integration.zsh
+    source ~/.iterm2_shell_integration.zsh
 fi
 
 autoload -U compinit && compinit
@@ -58,3 +58,56 @@ alias vim='nvim'
 alias vi='nvim'
 
 export EDITOR="nvim"
+
+function current_epoch() {
+    zmodload zsh/datetime
+    echo $(( EPOCHSECONDS / 60 / 60 / 24 ))
+}
+
+REALLINK="$(readlink -f ~/.zshrc)"
+DOTFILES_PATH="$(dirname $REALLINK)/../../../"
+
+function update_last_updated_file() {
+    echo "LAST_EPOCH=$(current_epoch)" >! "${HOME}/.dotfiles-epoch"
+}
+
+check_dotfiles() {
+    if (( $(git status --porcelain=v1 2>/dev/null | wc -l) )); then
+        echo "[dotfiles] uncommited changes, consider adding them and push upstream"
+    fi
+
+    git remote -v update > /dev/null 2>&1
+    UPSTREAM=${1:-'@{u}'}
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse "$UPSTREAM")
+    BASE=$(git merge-base @ "$UPSTREAM")
+
+    if [ $LOCAL = $REMOTE ]; then
+        update_last_updated_file
+    elif [ $LOCAL = $BASE ]; then
+        echo "[dotfiles] please update your local head with: update_dotfiles"
+    elif [ $REMOTE = $BASE ]; then
+        echo "[dotfiles] unpushed changes, consider pushing upstream"
+    else
+        echo "[dotfiles] diverged, try merge local changes with remote head"
+    fi
+}
+
+update_dotfiles() {
+    echo "[dotfiles] pulling"
+    (cd $DOTFILES_PATH && git pull)
+}
+
+
+function daily_dotfiles_check() {
+    if ! source "${HOME}/.dotfiles-epoch" 2>/dev/null || [[ -z "$LAST_EPOCH" ]]; then
+        update_last_updated_file
+    fi
+
+    epoch_target=1
+    if (( ( $(current_epoch) - $LAST_EPOCH ) >= $epoch_target )); then
+        (cd $DOTFILES_PATH && check_dotfiles)
+    fi
+}
+
+daily_dotfiles_check
