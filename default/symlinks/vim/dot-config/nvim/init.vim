@@ -28,7 +28,7 @@ Plug 'tpope/vim-obsession'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-tbone'
-Plug 'roxma/vim-tmux-clipboard'
+Plug 'Jakob-Koschel/vim-tmux-clipboard'
 
 " make vim understand file:line
 Plug 'wsdjeg/vim-fetch'
