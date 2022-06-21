@@ -37,6 +37,9 @@ fi
 autoload -U compinit && compinit
 zmodload -i zsh/complist
 
+# keep zsh in emacs mode
+bindkey -e
+
 bindkey '^R' history-incremental-search-backward
 bindkey "^P" up-line-or-search
 
