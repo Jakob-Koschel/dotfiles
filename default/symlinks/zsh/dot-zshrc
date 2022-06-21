@@ -105,6 +105,7 @@ update_dotfiles() {
 function daily_dotfiles_check() {
     if ! source "${HOME}/.dotfiles-epoch" 2>/dev/null || [[ -z "$LAST_EPOCH" ]]; then
         update_last_updated_file
+        LAST_EPOCH=$(current_epoch)
     fi
 
     epoch_target=1
