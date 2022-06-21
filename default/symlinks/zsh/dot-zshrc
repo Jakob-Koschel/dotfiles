@@ -10,9 +10,15 @@ zplug "plugins/gitfast", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "lukechilds/zsh-nvm"
 
+# Load completion library for those sweet [tab] squares
+zplug "lib/completion", from:oh-my-zsh
+# Load key-bindings otherwise shift+tab doesn't cycle backwards
+zplug "lib/key-bindings", from:oh-my-zsh
+
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug "themes/robbyrussell", from:oh-my-zsh, as:theme
+# TODO: https://github.com/sindresorhus/pure (?)
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
