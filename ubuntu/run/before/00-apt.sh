@@ -22,6 +22,10 @@ sudo apt-get install -y \
   build-essential \
   sudo
 
+if [[ $SHELL == '/bin/bash' ]]; then
+  chsh -s $(which zsh)
+fi
+
 # https://github.com/BurntSushi/ripgrep/issues/1777#issuecomment-866964695
 sudo apt install -o Dpkg::Options::="--force-overwrite" bat ripgrep
 
