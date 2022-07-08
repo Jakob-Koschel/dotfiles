@@ -84,6 +84,9 @@ set shell=zsh
 
 set termguicolors
 
+" pasting over a selection should not change the buffer (to paste the same thing again later)
+vnoremap p "_dP
+
 " fix pink on pink popups with coc warnings/errors
 highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
