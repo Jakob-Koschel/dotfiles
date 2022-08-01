@@ -39,10 +39,26 @@ if [ "$(uname)" == "Darwin" ]; then
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   if [ -f "/etc/arch-release" ]; then
     PROFILES="arch linux"
+
+    # check if git-crypt is installed
+    if ! command -v git-crypt &> /dev/null
+    then
+      sudo pacman -S --noconfirm git-crypt
+    fi
+    # check if stow is installed
+    if ! command -v stow &> /dev/null
+    then
+      sudo pacman -S --noconfirm stow
+    fi
   fi
-  if [ $(awk -F= '/^NAME/{print $2}' /etc/os-release) == "\"Ubuntu\"" ]; then
+  if [ "$(awk -F= '/^NAME/{print $2}' /etc/os-release)" == "\"Ubuntu\"" ]; then
     PROFILES="ubuntu linux"
 
+    # check if git-crypt is installed
+    if ! command -v git-crypt &> /dev/null
+    then
+      sudo apt update && sudo apt install -y git-crypt
+    fi
     # check if stow is installed
     if ! command -v stow &> /dev/null
     then
