@@ -8,6 +8,7 @@ sudo pacman -Syu --noconfirm \
   base-devel \
   gdb \
   cmake \
+  clang \
   `# Essential tools` \
   bat \
   diff-so-fancy \
