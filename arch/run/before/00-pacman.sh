@@ -3,36 +3,48 @@
 set -e
 
 sudo pacman -Syy
-sudo pacman -S --noconfirm \
+sudo pacman -Syu --noconfirm \
+  `# Build essentials` \
+  base-devel \
+  gdb \
+  cmake \
+  `# Essential tools` \
   bat \
   diff-so-fancy \
-  zsh \
-  vim \
-  neovim \
   git \
-  tmux \
+  htop \
+  man \
+  neovim \
   python \
-  python-pip
+  python-pip \
+  tmux \
+  vim \
+  zsh \
+  `# Networking` \
+  dhcpcd \
+  openssh \
+  `# Sway` \
+  alacritty \
+  dmenu \
+  foot \
+  sway \
+  swaybg \
+  wayvnc \
+  xorg-xlsclients \
+  xorg-xwayland \
+  `# KVM` \
+  dnsmasq \
+  bridge-utils \
+  openbsd-netcat \
+  virt-manager \
+  qemu-base \
+  `# Misc` \
+  usbutils \
+  `# Compiling linux` \
+  bc \
+  `# syzkaller` \
+  debootstrap
 
-# sudo apt-get update
-# sudo apt-get install -y \
-#   wget \
-#   zsh \
-#   vim \
-#   neovim \
-#   fzf \
-#   git \
-#   curl \
-#   tmux \
-#   python3 \
-#   python3-dev \
-#   clang \
-#   clangd \
-#   llvm \
-#   cmake \
-#   time \
-#   build-essential \
-#   sudo
 
 if [[ $SHELL == '/bin/bash' ]]; then
   chsh -s $(which zsh)
