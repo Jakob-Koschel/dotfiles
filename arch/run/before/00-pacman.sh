@@ -18,6 +18,7 @@ sudo pacman -Syu --noconfirm \
   neovim \
   python \
   python-pip \
+  rsync \
   tmux \
   vim \
   zsh \
