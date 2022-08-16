@@ -9,6 +9,9 @@ sudo pacman -Syu --noconfirm \
   gdb \
   cmake \
   clang \
+  `# used for git send-email` \
+  perl-io-socket-ssl \
+  perl-authen-sasl \
   `# Essential tools` \
   bat \
   diff-so-fancy \
