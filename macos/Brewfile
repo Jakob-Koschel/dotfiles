@@ -86,6 +86,8 @@ cask "zoom"
 cask "docker"
 cask "mactex"
 cask "vimr"
+cask "discord"
+cask "obsidian"
 
 tap "homebrew/cask-fonts"
 cask "font-roboto-mono-for-powerline"

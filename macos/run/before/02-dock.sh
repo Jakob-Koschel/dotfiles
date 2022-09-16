@@ -108,15 +108,25 @@ if dockutil --find "FaceTime"; then
 else
   dockutil --add "/System/Applications/FaceTime.app" --after 'Messages'
 fi
+if dockutil --find "Obsidian"; then
+  dockutil --move "Obsidian" --after 'FaceTime'
+else
+  dockutil --add "/System/Applications/Obsidian.app" --after 'FaceTime'
+fi
 if dockutil --find "Spotify"; then
   dockutil --move "Spotify" --after 'Notes'
 else
   dockutil --add /Applications/Spotify.app --after 'Notes'
 fi
-if dockutil --find "Slack"; then
-  dockutil --move "Slack" --after 'Spotify'
+if dockutil --find "Discord"; then
+  dockutil --move "Discord" --after 'Spotify'
 else
-  dockutil --add /Applications/Slack.app --after 'Spotify'
+  dockutil --add /Applications/Discord.app --after 'Spotify'
+fi
+if dockutil --find "Slack"; then
+  dockutil --move "Slack" --after 'Discord'
+else
+  dockutil --add /Applications/Slack.app --after 'Discord'
 fi
 if dockutil --find "iTerm"; then
   dockutil --move "iTerm" --after 'Slack'
