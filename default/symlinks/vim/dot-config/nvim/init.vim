@@ -42,6 +42,8 @@ Plug 'vim-airline/vim-airline'
 " better detection of intendation
 Plug 'tpope/vim-sleuth'
 
+Plug 'ahf/cocci-syntax'
+
 call plug#end()
 
 " Automatically remove trailing whitespaces
