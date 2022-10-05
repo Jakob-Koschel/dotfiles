@@ -61,6 +61,7 @@ brew "ack"
 brew "mackup"
 brew "pygments"
 brew "rclone"
+brew "vgrep"
 
 
 # casks
