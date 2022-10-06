@@ -2,4 +2,7 @@
 
 set -e
 
-npm -g install diff-so-fancy
+if command -v npm &> /dev/null
+then
+  npm -g install diff-so-fancy
+fi
