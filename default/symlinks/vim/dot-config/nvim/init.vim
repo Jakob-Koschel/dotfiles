@@ -101,6 +101,12 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" use arrow keys for resizing
+nnoremap <Up>    :resize -2<CR>
+nnoremap <Down>  :resize +2<CR>
+nnoremap <Left>  :vertical resize -2<CR>
+nnoremap <Right> :vertical resize +2<CR>
+
 " fzf
 let g:fzf_preview_command = 'bat --color=always --plain {-1}' "
 
