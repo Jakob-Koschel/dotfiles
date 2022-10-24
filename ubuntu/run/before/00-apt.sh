@@ -14,6 +14,7 @@ sudo apt-get install -y \
   tmux \
   python3 \
   python3-dev \
+  python3-pip \
   clang \
   clangd \
   llvm \
