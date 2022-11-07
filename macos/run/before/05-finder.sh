@@ -123,7 +123,9 @@ source `which virtualenvwrapper.sh`
 # somehow mkvirtualenv fails with set -e enabled
 set +e; mkvirtualenv finder-sidebar-editor; set -e;
 workon finder-sidebar-editor
-pip3 install finder-sidebar-editor
+# currently the pip package is broken with latest pyObjc
+pip3 install pyobjc
+pip3 install git+https://github.com/Jakob-Koschel/finder-sidebar-editor@fix-netfs
 mkdir -p $HOME/Developer
 python3 $(PWD)/../../finder-sidebar-editor.py
 deactivate
