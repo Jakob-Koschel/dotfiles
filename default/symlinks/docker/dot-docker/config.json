@@ -1,6 +1,5 @@
 {
-  "detachKeys": "ctrl-@,ctrl-@",
-  "auths" : {
-
-  }
+  "auths": {},
+  "credsStore": "desktop",
+  "detachKeys": "ctrl-@,ctrl-@"
 }
