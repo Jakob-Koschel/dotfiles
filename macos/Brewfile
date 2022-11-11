@@ -24,6 +24,7 @@ brew "cmake"
 brew "ctags"
 brew "curl"
 brew "dark-mode"
+brew "diffutils"
 brew "diff-so-fancy"
 
 # TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
