@@ -36,6 +36,9 @@ fi
 
 if [ "$(uname)" == "Darwin" ]; then
   PROFILES="macos"
+  if [ -n "$ENABLE_CRYPT" ]; then
+    PROFILES="$PROFILES macos-crypt"
+  fi
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   if [ -f "/etc/arch-release" ]; then
     PROFILES="arch linux"
