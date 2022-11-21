@@ -111,7 +111,7 @@ fi
 if dockutil --find "Obsidian"; then
   dockutil --move "Obsidian" --after 'FaceTime'
 else
-  dockutil --add "/System/Applications/Obsidian.app" --after 'FaceTime'
+  dockutil --add "/Applications/Obsidian.app" --after 'FaceTime'
 fi
 if dockutil --find "Spotify"; then
   dockutil --move "Spotify" --after 'Notes'
