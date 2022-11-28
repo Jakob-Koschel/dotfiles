@@ -26,6 +26,9 @@ brew "curl"
 brew "dark-mode"
 brew "diffutils"
 brew "diff-so-fancy"
+tap "go-task/tap"
+brew "go-task"
+brew "qemu"
 
 # TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
 # brew "dockutil"
