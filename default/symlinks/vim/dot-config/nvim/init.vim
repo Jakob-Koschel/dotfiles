@@ -44,6 +44,8 @@ Plug 'tpope/vim-sleuth'
 
 Plug 'ahf/cocci-syntax'
 
+Plug 'lervag/vimtex'
+
 call plug#end()
 
 " Automatically remove trailing whitespaces
