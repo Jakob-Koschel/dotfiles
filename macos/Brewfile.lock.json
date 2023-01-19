@@ -2737,11 +2737,17 @@
         "options": {
           "full_name": "obsidian"
         }
+      },
+      "drawio": {
+        "version": "20.7.4",
+        "options": {
+          "full_name": "drawio"
+        }
       }
     },
     "tap": {
       "homebrew/cask-fonts": {
-        "revision": "8a36d012f706a2012a0c344d74adb729d22a8b1f"
+        "revision": "b494ea9a387d2e9d9fa392ecf363f512674fe3a8"
       },
       "go-task/tap": {
         "revision": "1b4c8bdb9ccbc2fe8daacd86fc615f4d3b338a6d"
