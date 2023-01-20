@@ -46,10 +46,10 @@ Plug 'ahf/cocci-syntax'
 
 Plug 'lervag/vimtex'
 
-call plug#end()
+" add editorconfig (should be builtin with neovim 0.9)
+Plug 'gpanders/editorconfig.nvim'
 
-" Automatically remove trailing whitespaces
-autocmd BufWritePre * %s/\s\+$//e
+call plug#end()
 
 " Softtabs, 2 spaces
 set tabstop=2
