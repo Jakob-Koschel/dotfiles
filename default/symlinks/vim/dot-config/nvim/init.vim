@@ -49,6 +49,9 @@ Plug 'lervag/vimtex'
 " add editorconfig (should be builtin with neovim 0.9)
 Plug 'gpanders/editorconfig.nvim'
 
+" split text by sentences and length
+Plug 'whonore/vim-sentencer'
+
 call plug#end()
 
 " Softtabs, 2 spaces
