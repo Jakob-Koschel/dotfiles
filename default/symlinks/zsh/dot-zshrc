@@ -1,6 +1,9 @@
 # https://lakur.tech/2021/12/10/fix-slow-zsh-startup-nvm/
 export NVM_LAZY=1
 
+# /opt/homebrew/bin is not loaded by default make sure it is always there
+export PATH=/opt/homebrew/bin:$PATH
+
 [[ -f ~/.zsh/zsh-snap/znap.zsh ]] ||
     git clone --depth 1 -- \
         https://github.com/marlonrichert/zsh-snap.git ~/.zsh/zsh-snap
@@ -54,8 +57,6 @@ export GPG_TTY
 REALLINK="$(readlink -f ~/.zshrc)"
 DOTFILES_PATH="$(dirname $REALLINK)/../../../"
 
-# /opt/homebrew/bin is not loaded by default make sure it is always there
-export PATH=/opt/homebrew/bin:$PATH
 if [ -f $HOME/.zsh/path.zsh ]; then
     source $HOME/.zsh/path.zsh
 fi
