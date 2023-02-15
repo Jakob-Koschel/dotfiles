@@ -29,6 +29,13 @@ brew "diff-so-fancy"
 tap "go-task/tap"
 brew "go-task"
 brew "qemu"
+brew "neomutt"
+brew "pass"
+brew "isync"
+brew "msmtp"
+brew "lynx"
+brew "notmuch"
+brew "urlview"
 
 # TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
 # brew "dockutil"
