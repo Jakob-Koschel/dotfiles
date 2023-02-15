@@ -1,35 +1,28 @@
 # https://lakur.tech/2021/12/10/fix-slow-zsh-startup-nvm/
 export NVM_LAZY=1
 
-source ~/.zplug/init.zsh
+[[ -f ~/.zsh/zsh-snap/znap.zsh ]] ||
+    git clone --depth 1 -- \
+        https://github.com/marlonrichert/zsh-snap.git ~/.zsh/zsh-snap
 
-zplug "plugins/git",     from:oh-my-zsh
-zplug "plugins/tmux",    from:oh-my-zsh
-zplug "plugins/z",       from:oh-my-zsh
-zplug "plugins/gitfast", from:oh-my-zsh
-zplug "plugins/common-aliases", from:oh-my-zsh
-zplug "lukechilds/zsh-nvm"
+source ~/.zsh/zsh-snap/znap.zsh  # Start Znap
 
+znap source ohmyzsh/ohmyzsh lib/{git,theme-and-appearance}
+znap prompt ohmyzsh/ohmyzsh robbyrussell
+
+znap source ohmyzsh/ohmyzsh plugins/git
+znap source ohmyzsh/ohmyzsh plugins/tmux
+znap source ohmyzsh/ohmyzsh plugins/z
+znap source ohmyzsh/ohmyzsh plugins/gitfast
+znap source ohmyzsh/ohmyzsh plugins/common-aliases
 # Load completion library for those sweet [tab] squares
-zplug "lib/completion", from:oh-my-zsh
+znap source ohmyzsh/ohmyzsh lib/completion
 # Load key-bindings otherwise shift+tab doesn't cycle backwards
-zplug "lib/key-bindings", from:oh-my-zsh
+znap source ohmyzsh/ohmyzsh lib/key-bindings
 
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+znap source lukechilds/zsh-nvm
 
-zplug "themes/robbyrussell", from:oh-my-zsh, as:theme
-# TODO: https://github.com/sindresorhus/pure (?)
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# Then, source plugins and add commands to $PATH
-zplug load
+znap source zsh-users/zsh-syntax-highlighting
 
 # enable history
 export HISTFILE=~/.zsh_history
