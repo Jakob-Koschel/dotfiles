@@ -36,6 +36,7 @@ brew "msmtp"
 brew "lynx"
 brew "notmuch"
 brew "urlview"
+brew "mosh"
 
 # TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
 # brew "dockutil"

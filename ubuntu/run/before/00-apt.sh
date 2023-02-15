@@ -21,6 +21,7 @@ sudo apt-get install -y \
   cmake \
   time \
   build-essential \
+  mosh \
   sudo
 
 if [[ $SHELL == '/bin/bash' ]]; then
