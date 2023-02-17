@@ -3012,6 +3012,12 @@
         "options": {
           "full_name": "drawio"
         }
+      },
+      "xbar": {
+        "version": "2.1.7-beta",
+        "options": {
+          "full_name": "xbar"
+        }
       }
     },
     "tap": {
@@ -3050,7 +3056,7 @@
       "ventura": {
         "HOMEBREW_VERSION": "3.6.21",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "c1cd933952606a5d823f8f2f03a82a2e0e63b27e",
+        "Homebrew/homebrew-core": "e3971b6bc1fa873000656f5ca29fc0d4c5e05691",
         "CLT": "14.2.0.0.1.1668646533",
         "Xcode": "14.2",
         "macOS": "13.2.1"
