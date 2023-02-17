@@ -37,6 +37,9 @@ brew "lynx"
 brew "notmuch"
 brew "urlview"
 brew "mosh"
+brew "gpg"
+brew "gpg2"
+brew "pinentry-mac"
 
 # TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
 # brew "dockutil"
@@ -103,6 +106,7 @@ cask "discord"
 cask "obsidian"
 cask "drawio"
 cask "xbar"
+cask "hammerspoon"
 
 tap "homebrew/cask-fonts"
 cask "font-roboto-mono-for-powerline"
