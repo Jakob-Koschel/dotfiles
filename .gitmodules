@@ -1,0 +1,3 @@
+[submodule "macos/symlinks/hammerspoon/dot-hammerspoon/Spoons/MuttWizard.spoon"]
+	path = macos/symlinks/hammerspoon/dot-hammerspoon/Spoons/MuttWizard.spoon
+	url = https://github.com/Jakob-Koschel/MuttWizard.spoon.git
