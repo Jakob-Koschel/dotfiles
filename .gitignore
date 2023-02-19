@@ -1,6 +1,7 @@
 dotfiles-key
 hostname
 .config
+**/dot-local/bin/hs
 
 # General
 .DS_Store

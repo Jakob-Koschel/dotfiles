@@ -40,6 +40,7 @@ brew "mosh"
 brew "gpg"
 brew "gpg2"
 brew "pinentry-mac"
+brew "go"
 
 # TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
 # brew "dockutil"
