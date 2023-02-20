@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>io.jakob-koschel.goimapnotify</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>{dotfiles_path}/default/run-goimapnotify.py</string>
+    </array>
+    <key>KeepAlive</key>
+    <true/>
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>LC_ALL</key>
+      <string>en_US.UTF-8</string>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+    <key>UserName</key>
+    <string>{user}</string>
+    <key>StandardOutPath</key>
+    <string>{goimapnotify_log_path}</string>
+    <key>StandardErrorPath</key>
+    <string>{goimapnotify_err_log_path}</string>
+  </dict>
+</plist>
+
