@@ -106,11 +106,9 @@ cask "vimr"
 cask "discord"
 cask "obsidian"
 cask "drawio"
-cask "xbar"
 cask "hammerspoon"
 
 tap "homebrew/cask-fonts"
 cask "font-roboto-mono-for-powerline"
 
 mas "WireGuard", id: 1451685025
-mas "Shortery", id: 1594183810
