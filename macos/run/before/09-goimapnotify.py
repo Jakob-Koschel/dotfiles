@@ -62,6 +62,9 @@ def main():
         account_config['onNewMail'] = f'mw -y {user}'
         account_config['onNewMailPost'] = 'hs -c "spoon.MuttWizard.checkEmailUnread()"'
 
+        if mb_conf['AuthMechs'] == 'XOAUTH2':
+           account_config['xoauth2'] = True
+
         with open(f'{home_path}/.goimapnotify/{user}.goimapnotify', 'w') as f:
             f.write(json.dumps(account_config, indent=4))
 
