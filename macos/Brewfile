@@ -1,3 +1,5 @@
+tap "Jakob-Koschel/tap"
+
 brew "coreutils"
 brew "moreutils"
 brew "findutils"
@@ -32,7 +34,8 @@ brew "qemu"
 brew "neomutt"
 brew "pass"
 # brew "isync"
-brew "isync.rb"
+brew "isync-cyrus-sasl"
+brew "cyrus-sasl-xoauth2"
 brew "msmtp"
 brew "lynx"
 brew "notmuch"
@@ -43,9 +46,7 @@ brew "gpg2"
 brew "pinentry-mac"
 brew "go"
 
-# TODO: replaced with installing from dockutil.rb until upgraded to 3.0.2
-# brew "dockutil"
-brew "dockutil.rb"
+brew "jakob-koschel/tap/dockutil"
 
 brew "git"
 brew "git-crypt"
