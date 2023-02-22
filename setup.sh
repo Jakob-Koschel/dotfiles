@@ -84,4 +84,6 @@ echo "Run $DOTFILES_ROOT/bashdot/bashdot install $PROFILES..."
 export PATH="/usr/local/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 
+$DOTFILES_ROOT/bashdot before  $PROFILES
 $DOTFILES_ROOT/bashdot install $PROFILES
+$DOTFILES_ROOT/bashdot after   $PROFILES

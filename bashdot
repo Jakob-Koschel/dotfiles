@@ -18,15 +18,23 @@ action=$1
 usage() {
   case "$1" in
     commands)
-      echo "Usage: bashdot [install] OPTIONS"
+      echo "Usage: bashdot [install|before|after] OPTIONS"
       ;;
     install)
       echo "Usage: bashdot install PROFILE1 PROFILE2 ... PROFILEN"
       ;;
+    before)
+      echo "Usage: bashdot before PROFILE1 PROFILE2 ... PROFILEN"
+      ;;
+    after)
+      echo "Usage: bashdot after PROFILE1 PROFILE2 ... PROFILEN"
+      ;;
   esac
 }
 
-if [ "$action" != "install" ]; then
+if [ "$action" != "install" ] &&
+   [ "$action" != "before" ] &&
+   [ "$action" != "after" ]; then
   usage commands
   exit 1
 fi
@@ -56,9 +64,9 @@ exit_if_invalid_profile_name() {
 }
 
 log() {
-  action=$1 && shift
+  log_level=$1 && shift
 
-  case "$action" in
+  case "$log_level" in
     debug)  [[ "$LOGGER_LVL" =~ debug ]]           && echo "$( date "+${LOGGER_FMT}" ) - DEBUG - $@" 1>&2 ;;
     info)   [[ "$LOGGER_LVL" =~ debug|info ]]      && echo "$( date "+${LOGGER_FMT}" ) - INFO - $@" 1>&2  ;;
     warn)   [[ "$LOGGER_LVL" =~ debug|info|warn ]] && echo "$( date "+${LOGGER_FMT}" ) - WARN - $@" 1>&2  ;;
@@ -72,9 +80,6 @@ install() {
   profile=$1
   profile_dir="$current_working_dir/$profile"
   symlinks_dir="$profile_dir/symlinks"
-  run_dir="$profile_dir/run"
-  before_dir="$run_dir/before"
-  after_dir="$run_dir/after"
 
   exit_if_profile_directories_contain_invalid_characters "$profile_dir"
 
@@ -84,16 +89,6 @@ install() {
   fi
 
   log info "Adding dotfiles profile '$profile'."
-
-  log debug "Run before scripts."
-  if [ -e "$before_dir" ]; then
-    for file in $(ls "$before_dir"); do
-        log info "Run $file script."
-        (cd $before_dir && ./$file)
-    done
-  else
-    log debug "$profile doesn't have before scripts"
-  fi
 
   log info "Installing dotfiles from '$profile_dir'."
   cd $symlinks_dir
@@ -110,7 +105,51 @@ install() {
     fi
   done
 
-  log debug "Run after scripts."
+  log info "Completed adding dotfiles profile '$profile'."
+}
+
+before() {
+  profile=$1
+  profile_dir="$current_working_dir/$profile"
+  run_dir="$profile_dir/run"
+  before_dir="$run_dir/before"
+
+  exit_if_profile_directories_contain_invalid_characters "$profile_dir"
+
+  if [ ! -d "$profile_dir" ]; then
+    log error "Profile '$profile' directory does not exist."
+    exit 1
+  fi
+
+  log info "Run before scripts for dotfiles profile '$profile'."
+
+  if [ -e "$before_dir" ]; then
+    for file in $(ls "$before_dir"); do
+        log info "Run $file script."
+        (cd $before_dir && ./$file)
+    done
+  else
+    log debug "$profile doesn't have before scripts"
+  fi
+
+  log info "Completed running before scripts for dotfiles profile '$profile'."
+}
+
+after() {
+  profile=$1
+  profile_dir="$current_working_dir/$profile"
+  run_dir="$profile_dir/run"
+  after_dir="$run_dir/after"
+
+  exit_if_profile_directories_contain_invalid_characters "$profile_dir"
+
+  if [ ! -d "$profile_dir" ]; then
+    log error "Profile '$profile' directory does not exist."
+    exit 1
+  fi
+
+  log info "Run after scripts for dotfiles profile '$profile'."
+
   if [ -e "$after_dir" ]; then
     for file in $(ls "$after_dir"); do
         log info "Run $file script."
@@ -120,13 +159,17 @@ install() {
     log debug "$profile doesn't have after scripts"
   fi
 
-  log info "Completed adding dotfiles profile '$profile'."
+  log info "Completed running after scripts for dotfiles profile '$profile'."
 }
 
 case "$action" in
   install)
+    ;&
+  before)
+    ;&
+  after)
     if [ $# -lt 2 ]; then
-      usage install
+      usage $action
       exit 1
     fi
 
@@ -140,9 +183,9 @@ case "$action" in
       fi
 
       exit_if_invalid_profile_name "$1"
-      install "$1"
+      $action "$1"
     done
 
-    log info "Completed installation of all profiles succesfully."
+    log info "Completed '$action' of all profiles succesfully."
     ;;
 esac
