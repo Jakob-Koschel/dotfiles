@@ -46,6 +46,11 @@ def parse_mbsync_rc():
 
 def main():
     home_path = pathlib.Path.home()
+
+    if not pathlib.Path(f"{home_path}/.mbsyncrc").is_file():
+        print("goimapnotify: .mbsyncrc doesn't exist, ignore")
+        return
+
     pathlib.Path(f"{home_path}/.goimapnotify").mkdir(parents=True, exist_ok=True)
 
     mbsync_rc = parse_mbsync_rc()

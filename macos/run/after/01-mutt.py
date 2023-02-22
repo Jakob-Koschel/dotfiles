@@ -57,6 +57,12 @@ def write_mbsync_rc(mbsync_rc):
         f.write('\n\n'.join(output))
 
 def main():
+    home_path = pathlib.Path.home()
+
+    if not pathlib.Path(f"{home_path}/.mbsyncrc").is_file():
+        print("goimapnotify: .mbsyncrc doesn't exist, ignore")
+        return
+
     dotenv_path = '../../../.config'
     dotenv.load_dotenv(dotenv_path)
 
@@ -65,7 +71,6 @@ def main():
         gpg_public_key = input('Please enter the gpg public key: ')
         dotenv.set_key(dotenv_path, 'DOTFILES_GPG_PUBLIC_KEY', gpg_public_key)
 
-    home_path = pathlib.Path.home()
     pathlib.Path(f"{home_path}/.config/mutt/tokens").mkdir(parents=True, exist_ok=True)
 
     mbsync_rc = parse_mbsync_rc()
