@@ -5,6 +5,7 @@ import pathlib
 import subprocess
 import dotenv
 from collections import OrderedDict
+from glob import glob
 
 def parse_mbsync_rc():
     home_path = pathlib.Path.home()
@@ -96,22 +97,7 @@ def write_msmtp_rc(msmtp_rc):
         f.write('\n\n'.join(output))
         f.write('\n\n')
 
-def main():
-    home_path = pathlib.Path.home()
-    mutt_oauth2_path = pathlib.Path('../../../default/mutt_oauth2.py').resolve()
-
-    if not pathlib.Path(f"{home_path}/.mbsyncrc").is_file():
-        print("goimapnotify: .mbsyncrc doesn't exist, ignore")
-        return
-
-    dotenv_path = '../../../.config'
-    dotenv.load_dotenv(dotenv_path)
-
-    gpg_public_key = os.environ.get('DOTFILES_GPG_PUBLIC_KEY')
-    if not gpg_public_key:
-        gpg_public_key = input('Please enter the gpg public key: ')
-        dotenv.set_key(dotenv_path, 'DOTFILES_GPG_PUBLIC_KEY', gpg_public_key)
-
+def patch_mbsync(home_path, gpg_public_key, mutt_oauth2_path, dotenv_path):
     pathlib.Path(f"{home_path}/.config/mutt/tokens").mkdir(parents=True, exist_ok=True)
 
     mbsync_rc = parse_mbsync_rc()
@@ -166,16 +152,73 @@ def main():
 
     write_mbsync_rc(mbsync_rc)
 
+
+def patch_msmtp(home_path, gpg_public_key, mutt_oauth2_path):
     msmtp_rc = parse_msmtp_rc()
 
     for user in msmtp_rc:
         ms_conf = msmtp_rc[user]
 
-        tokenfile = f"{home_path}/.config/mutt/tokens/{user}.token"
-        ms_conf['passwordeval'] = f"\"{mutt_oauth2_path} {tokenfile} --gpg-public-key {gpg_public_key}\""
-        ms_conf['auth'] = "oauthbearer"
+        if ms_conf['host'] in ['smtp.gmail.com', 'smtp.office365.com']:
+            tokenfile = f"{home_path}/.config/mutt/tokens/{user}.token"
+            ms_conf['passwordeval'] = f"\"{mutt_oauth2_path} {tokenfile} --gpg-public-key {gpg_public_key}\""
+            if ms_conf['host'] == 'smtp.gmail.com':
+                ms_conf['auth'] = "oauthbearer"
+            elif ms_conf['host'] == 'smtp.office365.com':
+                ms_conf['auth'] = "xoauth2"
+                ms_conf['tls_starttls'] = "on"
 
     msmtp_rc = write_msmtp_rc(msmtp_rc)
+
+
+def main():
+    home_path = pathlib.Path.home()
+    mutt_oauth2_path = pathlib.Path('../../../default/mutt_oauth2.py').resolve()
+
+    if not pathlib.Path(f"{home_path}/.mbsyncrc").is_file():
+        print("goimapnotify: .mbsyncrc doesn't exist, ignore")
+        return
+
+    dotenv_path = '../../../.config'
+    dotenv.load_dotenv(dotenv_path)
+
+    gpg_public_key = os.environ.get('DOTFILES_GPG_PUBLIC_KEY')
+    if not gpg_public_key:
+        gpg_public_key = input('Please enter the gpg public key: ')
+        dotenv.set_key(dotenv_path, 'DOTFILES_GPG_PUBLIC_KEY', gpg_public_key)
+
+    # add default.muttrc to .muttrc if not done so already
+    with open(f"{home_path}/.config/mutt/muttrc", "r") as f:
+        muttrc = f.readlines()
+
+    if '.config/mutt/default.muttrc' not in "".join(muttrc):
+        print('add default.muttrc')
+        index = [idx for idx, s in enumerate(muttrc) if 'mutt-wizard.muttrc' in s][0]
+        muttrc.insert(index+1, f"source {home_path}/.config/mutt/default.muttrc\n")
+
+        with open(f"{home_path}/.config/mutt/muttrc", "w") as f:
+            f.write("".join(muttrc))
+
+    for path in glob(f'{home_path}/.config/mutt/accounts/*'):
+        with open(path, "r") as f:
+            content = f.read()
+        if '.config/mutt/account.muttrc' not in content:
+            print(f"add account.muttrc to {path}")
+            content = f"{content}\nsource {home_path}/.config/mutt/account.muttrc\n"
+            with open(path, "w") as f:
+                f.write(content)
+        if '\nmailboxes ' in content:
+            print(f"disable default mailboxes in {path}")
+            content = content.replace('\nmailboxes ', '\n# mailboxes ')
+            with open(path, "w") as f:
+                f.write(content)
+
+    # patch .mbsyncrc to use XOAUTH2
+    patch_mbsync(home_path, gpg_public_key, mutt_oauth2_path, dotenv_path)
+
+    # patch .msmtprc to use XOAUTH2
+    patch_msmtp(home_path, gpg_public_key, mutt_oauth2_path)
+
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,8 @@
+# vim: filetype=neomuttrc
+# this file has the sole purpose to extend / overwrite defaults of mutt-wizard
+
+set use_threads=threads sort=last-date sort_aux=date
+
+set reverse_name
+
+set edit_headers

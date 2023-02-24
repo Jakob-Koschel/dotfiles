@@ -1,0 +1,18 @@
+# vim: filetype=neomuttrc
+# this file has the sole purpose to extend / overwrite the account muttrc of mutt-wizard
+
+set sendmail = "msmtp"
+set use_from=yes
+set use_envelope_from=yes
+
+set status_format = "───[ Account: $from ]───"
+
+unmailboxes *
+
+set nm_default_uri  = "notmuch:///Users/jkl/.local/share/mail"
+named-mailboxes \
+    "unread" "notmuch://?query=tag:unread AND tag:inbox AND folder:/INBOX$/" \
+    "flagged" "notmuch://?query=tag:flagged"
+
+setenv folder "$folder"
+mailboxes `find $folder -mindepth 1 -type d -name cur | sed -e 's:/cur$:":' -e "s:$folder:\"=:" | sort | tr '\n' ' '`
