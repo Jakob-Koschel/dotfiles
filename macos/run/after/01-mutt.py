@@ -4,16 +4,17 @@ import os
 import pathlib
 import subprocess
 import dotenv
+from collections import OrderedDict
 
 def parse_mbsync_rc():
     home_path = pathlib.Path.home()
-    mbsync_rc = {}
+    mbsync_rc = OrderedDict()
     with open(f'{home_path}/.mbsyncrc', 'r') as f:
         content = f.read().split('\n\n')
         for c in content:
             if 'IMAPStore ' in c:
                 c = [line.rstrip() for line in c.split('\n')]
-                obj = {}
+                obj = OrderedDict()
                 for line in c:
                     if len(line) == 0:
                         continue
@@ -25,6 +26,30 @@ def parse_mbsync_rc():
                     obj["PassCmd"] = obj["PassCmd"][1:-1]
                 mbsync_rc[obj['User']] = obj
     return mbsync_rc
+
+def parse_msmtp_rc():
+    home_path = pathlib.Path.home()
+    msmtp_rc = OrderedDict()
+    with open(f'{home_path}/.msmtprc', 'r') as f:
+        content = f.read().split('\n\n')
+        for c in content:
+            if c == '':
+                continue
+            c = [line.rstrip() for line in c.split('\n')]
+            obj = OrderedDict()
+            for line in c:
+                if len(line) == 0:
+                    continue
+                if ' ' in line:
+                    key, value = line.split(' ', 1)
+                elif '\t':
+                    key, value = line.split('\t', 1)
+                else:
+                    raise Exception("invalid line")
+                obj[key] = value
+
+            msmtp_rc[obj['account']] = obj
+    return msmtp_rc
 
 def write_mbsync_rc(mbsync_rc):
     home_path = pathlib.Path.home()
@@ -56,8 +81,24 @@ def write_mbsync_rc(mbsync_rc):
     with open(f'{home_path}/.mbsyncrc', 'w') as f:
         f.write('\n\n'.join(output))
 
+def write_msmtp_rc(msmtp_rc):
+    home_path = pathlib.Path.home()
+    output = []
+
+    for user in msmtp_rc:
+        conf = msmtp_rc[user]
+        conf_str = []
+        for key, value in conf.items():
+            conf_str.append(f'{key} {value}')
+        output.append('\n'.join(conf_str))
+
+    with open(f'{home_path}/.msmtprc', 'w') as f:
+        f.write('\n\n'.join(output))
+        f.write('\n\n')
+
 def main():
     home_path = pathlib.Path.home()
+    mutt_oauth2_path = pathlib.Path('../../../default/mutt_oauth2.py').resolve()
 
     if not pathlib.Path(f"{home_path}/.mbsyncrc").is_file():
         print("goimapnotify: .mbsyncrc doesn't exist, ignore")
@@ -105,7 +146,6 @@ def main():
             continue
 
         tokenfile = f"{home_path}/.config/mutt/tokens/{user}.token"
-        mutt_oauth2_path = pathlib.Path('../../../default/mutt_oauth2.py').resolve()
 
         try:
             subprocess.run([mutt_oauth2_path,
@@ -125,6 +165,17 @@ def main():
         mb_conf['AuthMechs'] = "XOAUTH2"
 
     write_mbsync_rc(mbsync_rc)
+
+    msmtp_rc = parse_msmtp_rc()
+
+    for user in msmtp_rc:
+        ms_conf = msmtp_rc[user]
+
+        tokenfile = f"{home_path}/.config/mutt/tokens/{user}.token"
+        ms_conf['passwordeval'] = f"\"{mutt_oauth2_path} {tokenfile} --gpg-public-key {gpg_public_key}\""
+        ms_conf['auth'] = "oauthbearer"
+
+    msmtp_rc = write_msmtp_rc(msmtp_rc)
 
 if __name__ == '__main__':
     main()
