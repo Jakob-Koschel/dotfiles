@@ -1,10 +1,12 @@
 local spoons = {
-	MuttWizard = {},
+	MuttWizard = {
+		auto_auth = true,
+	},
 }
 
 -- enable cli
 require("hs.ipc")
-output = hs.ipc.cliInstall('/Users/jkl/.local', false)
+output = hs.ipc.cliInstall("~/.local", false)
 
 -- load spoons
 for spoonName, spoonConfig in pairs(spoons) do
