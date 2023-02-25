@@ -1,5 +1,5 @@
 {
   "auths": {},
-  "credStore": "desktop",
+  "credsStore": "desktop",
   "detachKeys": "ctrl-@,ctrl-@"
 }
