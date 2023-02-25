@@ -89,7 +89,7 @@ args = ap.parse_args()
 # input and write to standard output. The example values here invoke GPG,
 # although won't work until an appropriate identity appears in the first line.
 ENCRYPTION_PIPE = ['gpg', '--encrypt', '--recipient', args.gpg_public_key]
-DECRYPTION_PIPE = ['gpg', '--decrypt']
+DECRYPTION_PIPE = ['gpg', '--decrypt', '--pinentry-mode=cancel']
 
 token = {}
 path = Path(args.tokenfile)
