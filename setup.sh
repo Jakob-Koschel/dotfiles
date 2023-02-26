@@ -54,7 +54,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
       sudo pacman -S --noconfirm stow
     fi
   fi
-  if [ "$(awk -F= '/^NAME/{print $2}' /etc/os-release)" == "\"Ubuntu\"" ]; then
+  DISTRIBUTION="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
+  if [ $DISTRIBUTION == "\"Ubuntu\"" ] && [ $DISTRIBUTION == "\"Debian GNU/Linux\"" ]; then
     PROFILES="ubuntu linux"
 
     # check if git-crypt is installed

@@ -8,4 +8,4 @@ if [ ! -e $HOME/.tmux/plugins/tpm ]; then
   git clone $TPM_GIT_REMOTE $HOME/.tmux/plugins/tpm
 fi
 
-$HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
+tmux source $HOME/.tmux.conf && $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
