@@ -12,7 +12,12 @@ unmailboxes *
 set nm_default_uri  = "notmuch:///Users/jkl/.local/share/mail"
 named-mailboxes \
     "unread" "notmuch://?query=tag:unread AND tag:inbox AND folder:/INBOX$/" \
-    "flagged" "notmuch://?query=tag:flagged"
+    "flagged" "notmuch://?query=tag:flagged" \
+    " " "notmuch://?query=tag:plchldr"
+
+# automatically set flags in notmuch
+set nm_record = yes
+set nm_record_tags = "inbox,sent,me,read"
 
 setenv folder "$folder"
 mailboxes `find $folder -mindepth 1 -type d -name cur | sed -e 's:/cur$:":' -e "s:$folder:\"=:" | sort | tr '\n' ' '`
