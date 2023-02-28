@@ -212,6 +212,23 @@ def main():
             content = content.replace('\nmailboxes ', '\n# mailboxes ')
             with open(path, "w") as f:
                 f.write(content)
+        if '@gmail.com' in path:
+            if "=Sent" in content:
+                content = content.replace("Sent", "[Gmail]/Sent Mail")
+                with open(path, "w") as f:
+                    f.write(content)
+            if "=Drafts" in content:
+                content = content.replace("Drafts", "[Gmail]/Drafts")
+                with open(path, "w") as f:
+                    f.write(content)
+            if "=Trash" in content:
+                content = content.replace("Trash", "[Gmail]/Trash")
+                with open(path, "w") as f:
+                    f.write(content)
+            if "=Junk" in content:
+                content = content.replace("Junk", "[Gmail]/Spam")
+                with open(path, "w") as f:
+                    f.write(content)
 
     # patch .mbsyncrc to use XOAUTH2
     patch_mbsync(home_path, gpg_public_key, mutt_oauth2_path, dotenv_path)
