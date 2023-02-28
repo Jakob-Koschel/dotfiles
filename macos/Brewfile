@@ -45,6 +45,7 @@ brew "gpg"
 brew "gpg2"
 brew "pinentry-mac"
 brew "go"
+brew "tldr"
 
 brew "jakob-koschel/tap/dockutil"
 
