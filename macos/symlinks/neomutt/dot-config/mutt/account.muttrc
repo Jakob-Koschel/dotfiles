@@ -13,6 +13,8 @@ set nm_default_uri  = "notmuch:///Users/jkl/.local/share/mail"
 named-mailboxes \
     "unread" "notmuch://?query=tag:unread AND tag:inbox AND folder:/INBOX$/" \
     "flagged" "notmuch://?query=tag:flagged" \
+    "inbox" "notmuch://?query=folder:/INBOX$/" \
+    "junk" "notmuch://?query=folder:/\/\\[Gmail\\]\/Spam$/" \
     " " "notmuch://?query=tag:plchldr"
 
 # automatically set flags in notmuch
