@@ -12,3 +12,6 @@ set mailcap_path = ~/.mailcap:$mailcap_path
 # navigate sidebar
 macro index,pager J <sidebar-next><sidebar-open>
 macro index,pager K <sidebar-prev><sidebar-open>
+
+auto_view text/x-diff
+auto_view text/x-patch
