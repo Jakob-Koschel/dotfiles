@@ -81,6 +81,9 @@ brew "mackup"
 brew "pygments"
 brew "rclone"
 brew "vgrep"
+brew "docker"
+brew "docker-compose"
+brew "colima"
 
 
 # casks
@@ -103,7 +106,6 @@ cask "signal"
 cask "zotero"
 cask "hiddenbar"
 cask "zoom"
-cask "docker"
 cask "mactex"
 cask "vimr"
 cask "discord"
