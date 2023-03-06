@@ -55,7 +55,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     fi
   fi
   DISTRIBUTION="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
-  if [ $DISTRIBUTION == "\"Ubuntu\"" ] && [ $DISTRIBUTION == "\"Debian GNU/Linux\"" ]; then
+  if [ $DISTRIBUTION == "\"Ubuntu\"" ] || [ $DISTRIBUTION == "\"Debian GNU/Linux\"" ]; then
     PROFILES="ubuntu linux"
 
     # check if git-crypt is installed
