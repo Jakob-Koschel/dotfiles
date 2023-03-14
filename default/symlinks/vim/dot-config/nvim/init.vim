@@ -104,6 +104,8 @@ highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 let g:signify_sign_change = '~'
 
 " coc.nvim
+let g:coc_config_home = '~/.config/coc'
+
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
