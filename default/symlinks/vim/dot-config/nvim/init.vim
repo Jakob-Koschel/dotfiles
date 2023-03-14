@@ -16,11 +16,12 @@ let g:coc_global_extensions = [
 \ 'coc-yaml',
 \ 'coc-clangd',
 \ 'coc-pyright',
+\ 'coc-ltex',
 \ ]
 
 call plug#begin()
 
-Plug 'tpope/vim-sensible'
+" git wrapper (Gblame, etc)
 Plug 'tpope/vim-fugitive'
 
 " keep session files to restore sessions after tmux restart
@@ -36,7 +37,9 @@ Plug 'wsdjeg/vim-fetch'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' , 'do': { -> coc#util#install() } }
 
+" show git diffs in the sign column
 Plug 'mhinz/vim-signify'
+
 Plug 'vim-airline/vim-airline'
 
 " better detection of intendation
@@ -83,7 +86,7 @@ nnoremap <CR> o
 "Use mac clipboard
 set clipboard=unnamed
 
-"Use UTF-8 for YouCompleteMe
+"Use UTF-8
 set encoding=utf-8
 
 " use zsh internally
@@ -105,6 +108,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Remap keys for applying code actions at the cursor position
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
 
 " use arrow keys for resizing
 nnoremap <Up>    :resize -2<CR>
