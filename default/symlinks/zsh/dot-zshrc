@@ -130,3 +130,41 @@ vgrep() {
   fzf --bind "change:reload:$VGREP_PREFIX {q} || true" --ansi --phony --tac --query "$INITIAL_QUERY" \
   | awk '{print $1}' | xargs -I{} -o vgrep --show {}
 }
+
+# git prompt for worktrees
+git_worktree_prompt_info() {
+    # copied from https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/git.zsh#L12
+    # If we are on a folder not tracked by git, get out.
+    # Otherwise, check for hide-info at global and local repository level
+    if ! __git_prompt_git rev-parse --git-dir &> /dev/null \
+        || [[ "$(__git_prompt_git config --get oh-my-zsh.hide-info 2>/dev/null)" == 1 ]]; then
+        return 0
+    fi
+
+    local ref
+    ref=$(__git_prompt_git symbolic-ref --short HEAD 2> /dev/null) \
+    || ref=$(__git_prompt_git describe --tags --exact-match HEAD 2> /dev/null) \
+    || ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) \
+    || return 0
+
+    # Use global ZSH_THEME_GIT_SHOW_UPSTREAM=1 for including upstream remote info
+    local upstream
+    if (( ${+ZSH_THEME_GIT_SHOW_UPSTREAM} )); then
+        upstream=$(__git_prompt_git rev-parse --abbrev-ref --symbolic-full-name "@{upstream}" 2>/dev/null) \
+        && upstream=" -> ${upstream}"
+    fi
+
+    local worktree
+    if (( ${+ZSH_THEME_GIT_WORKTREE_SHOW_REPO} )); then
+        worktree=$(basename $(git rev-parse --path-format=absolute --git-common-dir))/
+        worktree="${worktree/.git/}"
+        if [ "$worktree" = "/" ]; then
+            worktree=
+        fi
+    fi
+
+    echo "${ZSH_THEME_GIT_PROMPT_PREFIX}${worktree:gs/%/%%}${ref:gs/%/%%}${upstream:gs/%/%%}$(parse_git_dirty)${ZSH_THEME_GIT_PROMPT_SUFFIX}"
+}
+
+ZSH_THEME_GIT_WORKTREE_SHOW_REPO=1
+PROMPT="${PROMPT/git_prompt_info/git_worktree_prompt_info}"
