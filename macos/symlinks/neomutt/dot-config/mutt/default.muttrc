@@ -5,8 +5,6 @@ set use_threads=threads sort=last-date sort_aux=date
 
 set reverse_name
 
-set edit_headers
-
 set mailcap_path = ~/.mailcap:$mailcap_path
 
 # navigate sidebar
