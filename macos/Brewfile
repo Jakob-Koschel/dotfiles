@@ -46,6 +46,7 @@ brew "gpg2"
 brew "pinentry-mac"
 brew "go"
 brew "tldr"
+brew "jakob-koschel/tap/ltex-ls", args: ['HEAD']
 brew "languagetool"
 
 brew "jakob-koschel/tap/dockutil"
