@@ -38,7 +38,7 @@ set -g renumber-windows on
 set -g prefix C-a
 
 # increase scrollback lines
-set -g history-limit 10000
+set -g history-limit 1000000
 
 # Use vim keybindings in copy mode
 setw -g mode-keys vi
