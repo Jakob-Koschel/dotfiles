@@ -172,6 +172,9 @@ def patch_msmtp(home_path, gpg_public_key, mutt_oauth2_path):
 
 
 def main():
+    # currently disable mutt setup
+    return
+
     home_path = pathlib.Path.home()
     mutt_oauth2_path = pathlib.Path('../../../default/mutt_oauth2.py').resolve()
 
