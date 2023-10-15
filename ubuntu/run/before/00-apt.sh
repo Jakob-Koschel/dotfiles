@@ -4,6 +4,7 @@ set -e
 
 sudo apt-get update
 sudo apt-get install -y \
+  foot \
   wget \
   zsh \
   vim \
@@ -16,6 +17,9 @@ sudo apt-get install -y \
   python3 \
   python3-dev \
   python3-pip \
+  python3-virtualenv \
+  python3-virtualenvwrapper \
+  python3-pynvim \
   clang \
   clangd \
   llvm \
