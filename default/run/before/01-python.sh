@@ -3,7 +3,15 @@
 set -e
 
 # virtualenv stuff is essential
-pip3 install --user virtualenv virtualenvwrapper
+if ! pip3 show virtualenv >/dev/null; then
+  pip3 install --user virtualenv
+fi
+if ! pip3 show virtualenvwrapper >/dev/null; then
+  pip3 install --user virtualenvwrapper
+fi
+
 
 # pynvim for neovim support
-pip3 install --user pynvim
+if ! pip3 show pynvim >/dev/null; then
+  pip3 install --user pynvim
+fi
