@@ -11,7 +11,7 @@ export PATH=/opt/homebrew/bin:$PATH
 source ~/.zsh/zsh-snap/znap.zsh  # Start Znap
 
 znap source ohmyzsh/ohmyzsh lib/{git,theme-and-appearance}
-znap prompt ohmyzsh/ohmyzsh robbyrussell
+znap prompt ohmyzsh/ohmyzsh themes/robbyrussell
 
 znap source ohmyzsh/ohmyzsh plugins/git
 znap source ohmyzsh/ohmyzsh plugins/tmux
