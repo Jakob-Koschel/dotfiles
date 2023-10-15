@@ -186,7 +186,8 @@ defaults write ~/Library/Preferences/org.gpgtools.gpgmail SignNewEmailsByDefault
 # Notes                                                                       #
 ###############################################################################
 
-defaults write com.apple.Notes ICTextStyleAutoListInsertionEnabled -int 0
+# crashing on macOS 14
+# defaults write com.apple.Notes ICTextStyleAutoListInsertionEnabled -int 0
 
 
 echo "Done. Note that some of these changes require a logout/restart of your OS to take effect.  At a minimum, be sure to restart your Terminal."
