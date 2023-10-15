@@ -1,0 +1,27 @@
+[push]
+	default = current
+[core]
+	editor = nvim
+	pager = delta --diff-so-fancy | less --tabs=4 -RFX
+	excludesfile = ~/.git-excludesfile
+[interactive]
+    diffFilter = delta --diff-so-fancy --color-only
+
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
+
+[diff-so-fancy]
+	stripLeadingSymbols = false
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+[include]
+  path = ~/.gitconfig_include
