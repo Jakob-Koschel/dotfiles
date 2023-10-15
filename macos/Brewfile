@@ -52,6 +52,7 @@ brew "jakob-koschel/tap/dockutil"
 
 brew "git"
 brew "git-crypt"
+brew "git-delta"
 brew "hexedit"
 brew "htop"
 brew "hub"
