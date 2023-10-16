@@ -1,0 +1,10 @@
+[Unit]
+Description=Keyd Application Mapper
+
+[Service]
+ExecStart=keyd-application-mapper
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=default.target
