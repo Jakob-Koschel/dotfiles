@@ -34,6 +34,15 @@ else
   ENABLE_CRYPT=1
 fi
 
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  SESSION_TYPE=remote/ssh
+  # many other tests omitted
+else
+  case $(ps -o comm= -p "$PPID") in
+    sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+  esac
+fi
+
 if [ "$(uname)" == "Darwin" ]; then
   PROFILES="macos"
   if [ -n "$ENABLE_CRYPT" ]; then
@@ -71,6 +80,9 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   fi
   if [ -n "$ENABLE_CRYPT" ]; then
     PROFILES="$PROFILES linux-crypt"
+  fi
+  if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
+    PROFILES="$PROFILES linux-desktop"
   fi
 fi
 
