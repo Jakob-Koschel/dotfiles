@@ -66,6 +66,9 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   DISTRIBUTION="$(awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"')"
   if [[ "$DISTRIBUTION" == "Ubuntu" ]] || [[ "$DISTRIBUTION" == "Debian GNU/Linux"* ]]; then
     PROFILES="ubuntu linux"
+    if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
+      PROFILES="$PROFILES ubuntu-desktop"
+    fi
 
     # check if git-crypt is installed
     if ! command -v git-crypt &> /dev/null
