@@ -48,7 +48,7 @@ brew "tldr"
 brew "jakob-koschel/tap/ltex-ls", args: ['HEAD']
 brew "languagetool"
 
-brew "jakob-koschel/tap/dockutil"
+brew "dockutil", args: ['HEAD']
 
 brew "git"
 brew "git-crypt"
