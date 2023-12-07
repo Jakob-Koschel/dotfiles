@@ -12,5 +12,6 @@ sudo apt-get install -y \
   wdisplays \
   pamixer \
   waybar \
+  mako-notifier \
   foot \
   foot-themes
