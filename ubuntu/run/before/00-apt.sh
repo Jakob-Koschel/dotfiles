@@ -11,7 +11,6 @@ sudo apt-get install -y \
   neovim \
   fzf \
   git \
-  git-delta \
   curl \
   tmux \
   python3 \
@@ -27,7 +26,10 @@ sudo apt-get install -y \
   time \
   build-essential \
   mosh \
+  snapd \
   sudo
+
+sudo snap install git-delta-snap
 
 if [[ $SHELL == '/bin/bash' ]]; then
   chsh -s $(which zsh)
