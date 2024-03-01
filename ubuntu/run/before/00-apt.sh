@@ -29,6 +29,7 @@ sudo apt-get install -y \
   sudo
 
 sudo snap install git-delta-snap
+sudo snap alias git-delta-snap.delta delta
 
 if [[ $SHELL == '/bin/bash' ]]; then
   chsh -s $(which zsh)
