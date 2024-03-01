@@ -169,3 +169,19 @@ git_worktree_prompt_info() {
 
 ZSH_THEME_GIT_WORKTREE_SHOW_REPO=1
 PROMPT="${PROMPT/git_prompt_info/git_worktree_prompt_info}"
+
+# discord notify
+notify() {
+    if [ -z ${DISCORD_WEBHOOK_URL+x} ]; then
+        echo "need to set DISCORD_WEBHOOK_URL to work!"
+        return 1
+    fi
+    if [ $# -lt 1 ]; then
+        echo "need to specify message"
+        return 1
+    fi
+    curl \
+        -H "Content-Type: application/json" \
+        -d "{\"username\": \"$(hostname)\", \"content\": \"$1\"}" \
+        $DISCORD_WEBHOOK_URL
+}
