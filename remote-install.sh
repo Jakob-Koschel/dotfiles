@@ -2,6 +2,8 @@
 
 set -e
 
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
 if [ $# -lt 1 ]; then
   echo "please run like this './remote-install.sh <hostname>'"
   exit 1
@@ -27,5 +29,12 @@ if [ -z "$DOTFILES_EXIST" ]; then
 else
   remote_command $HOSTNAME 'cd Developer/dotfiles && git pull'
   remote_command $HOSTNAME 'bash -c "cd Developer/dotfiles && ./setup.sh"'
-  echo "done"
+fi
+
+read -p "Do you want to decrypt remote dotfiles? [yN]: " -n 1 -r; echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  scp $SCRIPTPATH/dotfiles-key $HOSTNAME:Developer/dotfiles
+  remote_command $HOSTNAME 'cd Developer/dotfiles && git-crypt unlock dotfiles-key'
+  remote_command $HOSTNAME 'rm Developer/dotfiles/dotfiles-key'
+  remote_command $HOSTNAME 'bash -c "cd Developer/dotfiles && ./setup.sh"'
 fi
