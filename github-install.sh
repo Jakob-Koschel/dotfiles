@@ -5,6 +5,6 @@
 
 set -e
 
-git clone https://github.com/Jakob-Koschel/dotfiles.git
+git clone --recurse-submodules https://github.com/Jakob-Koschel/dotfiles.git
 cd dotfiles
 ./setup.sh

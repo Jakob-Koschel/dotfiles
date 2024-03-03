@@ -94,12 +94,12 @@ if [ -n "$ENABLE_CRYPT" ]; then
   PROFILES="$PROFILES default-crypt"
 fi
 
-echo "Run $DOTFILES_ROOT/bashdot/bashdot install $PROFILES..."
+echo "Run $DOTFILES_ROOT/bashdot/bashdot/bashdot install $PROFILES..."
 
 # make sure that /usr/local/bin is in PATH
 export PATH="/usr/local/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 
-$DOTFILES_ROOT/bashdot before  $PROFILES
-$DOTFILES_ROOT/bashdot install $PROFILES
-$DOTFILES_ROOT/bashdot after   $PROFILES
+$DOTFILES_ROOT/bashdot/bashdot before  $PROFILES
+$DOTFILES_ROOT/bashdot/bashdot install $PROFILES
+$DOTFILES_ROOT/bashdot/bashdot after   $PROFILES
