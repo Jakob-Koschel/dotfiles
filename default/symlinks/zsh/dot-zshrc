@@ -185,3 +185,30 @@ notify() {
         -d "{\"username\": \"$(hostname)\", \"content\": \"$1\"}" \
         $DISCORD_WEBHOOK_URL
 }
+
+preexec () {
+    # Note the date when the command started, in unix time.
+    CMD_START_DATE=$(date +%s)
+    # Store the command that we're running.
+    CMD_NAME=$1
+}
+precmd () {
+    # Proceed only if we've ran a command in the current shell.
+    if ! [[ -z $CMD_START_DATE ]]; then
+        # Note current date in unix time
+        CMD_END_DATE=$(date +%s)
+        # Store the difference between the last command start date vs. current date.
+        CMD_ELAPSED_TIME=$(($CMD_END_DATE - $CMD_START_DATE))
+        # Store an arbitrary threshold, in seconds.
+        CMD_NOTIFY_THRESHOLD=60
+
+        if [ -z ${DISCORD_WEBHOOK_URL+x} ]; then
+            return 0
+        fi
+        if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
+            # Send a notification
+            echo "DONE!"
+            notify "The command \`$CMD_NAME\` has finished."
+        fi
+    fi
+}
