@@ -205,6 +205,9 @@ precmd () {
         if [ -z ${DISCORD_WEBHOOK_URL+x} ]; then
             return 0
         fi
+        if [[ $CMD_NAME == ssh* ]]; then
+            return 0
+        fi
         if [[ $CMD_ELAPSED_TIME -gt $CMD_NOTIFY_THRESHOLD ]]; then
             # Send a notification
             echo "DONE!"
