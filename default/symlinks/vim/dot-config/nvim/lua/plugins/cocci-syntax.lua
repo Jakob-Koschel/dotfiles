@@ -1,0 +1,3 @@
+return {
+  'ahf/cocci-syntax'
+}

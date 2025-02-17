@@ -1,0 +1,3 @@
+return {
+  'whonore/vim-sentencer'
+}

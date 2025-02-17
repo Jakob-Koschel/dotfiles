@@ -1,13 +1,6 @@
 syntax on
 filetype plugin indent on
 
-" plugin manager
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 let g:coc_global_extensions = [
 \ 'coc-json',
 \ 'coc-tsserver',
@@ -19,43 +12,15 @@ let g:coc_global_extensions = [
 \ 'coc-ltex',
 \ ]
 
-call plug#begin()
+lua << EOF
+require("config.lazy")
+EOF
 
-" git wrapper (Gblame, etc)
-Plug 'tpope/vim-fugitive'
+lua << EOF
+require("mason").setup()
+EOF
 
-" keep session files to restore sessions after tmux restart
-Plug 'tpope/vim-obsession'
-
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-tbone'
-Plug 'Jakob-Koschel/vim-tmux-clipboard'
-
-" make vim understand file:line
-Plug 'wsdjeg/vim-fetch'
-
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'neoclide/coc.nvim', { 'branch': 'release' , 'do': { -> coc#util#install() } }
-
-" show git diffs in the sign column
-Plug 'mhinz/vim-signify'
-
-Plug 'vim-airline/vim-airline'
-
-" better detection of intendation
-Plug 'tpope/vim-sleuth'
-
-Plug 'ahf/cocci-syntax'
-
-Plug 'lervag/vimtex'
-
-" add editorconfig (should be builtin with neovim 0.9)
-Plug 'gpanders/editorconfig.nvim'
-
-" split text by sentences and length
-Plug 'whonore/vim-sentencer'
-
-call plug#end()
+colorscheme vim
 
 " Softtabs, 2 spaces
 set tabstop=2
@@ -64,10 +29,13 @@ set shiftround
 set expandtab
 
 " Make it obvious where 120 characters is
-set textwidth=120
+set textwidth=80
 set formatoptions=qrn1
 set wrapmargin=0
 set colorcolumn=+1
+
+" Always show signcolumn (git diffs & linter errors) to avoid shifting to the right)
+set signcolumn=yes
 
 " latex files should only have a width of 80
 autocmd Filetype tex set textwidth=80
@@ -75,6 +43,12 @@ autocmd Filetype tex set textwidth=80
 " Numbers
 set number
 set numberwidth=5
+
+" remap <leader> to ,
+let mapleader = ","
+
+" disable mouse
+set mouse=
 
 " Open new split panes to right and bottom, which feels more natural
 " set splitbelow
