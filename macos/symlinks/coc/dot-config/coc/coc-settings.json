@@ -2,5 +2,6 @@
   "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd",
   "ltex.languageToolHttpServerUri": "http://localhost:8081/",
   "ltex.enabled": ["bibtex", "context", "context.tex", "html", "latex", "markdown", "org", "restructuredtext", "rsweave", "git-commit", "gitcommit"],
-  "ltex.ltex-ls.path": "/opt/homebrew/opt/ltex-ls/libexec/"
+  "ltex.ltex-ls.path": "/opt/homebrew/opt/ltex-ls/libexec/",
+  "ltex.dictionary": { "en-US": [":~/.config/nvim/spell/en.utf-8.add"] }
 }
