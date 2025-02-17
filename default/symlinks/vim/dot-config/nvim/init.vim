@@ -44,9 +44,6 @@ autocmd Filetype tex set textwidth=80
 set number
 set numberwidth=5
 
-" remap <leader> to ,
-let mapleader = ","
-
 " disable mouse
 set mouse=
 
