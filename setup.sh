@@ -1,50 +1,73 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+
+DRY_RUN=0
+case "${1:-}" in
+  --dry-run) DRY_RUN=1 ;;
+  "") ;;
+  *) echo "unknown argument: $1" >&2; exit 1 ;;
+esac
 
 cd "$(dirname "$0")"
 DOTFILES_ROOT=$(pwd -P)
+BASHDOT="$DOTFILES_ROOT/bashdot/bashdot"
+UNAME=$(uname -s)
 
-git submodule init && git submodule update
-
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+SESSION_TYPE=""
+if [[ -n "${SSH_CLIENT:-}" || -n "${SSH_TTY:-}" ]]; then
   SESSION_TYPE=remote/ssh
-  # many other tests omitted
-else
-  case $(ps -o comm= -p "$PPID") in
-    sshd|*/sshd) SESSION_TYPE=remote/ssh;;
-  esac
 fi
 
-if [ "$(uname)" == "Darwin" ]; then
-  PROFILES="macos"
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  DISTRIBUTION="$(awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"')"
-  if [[ "$DISTRIBUTION" == "Ubuntu" ]] || [[ "$DISTRIBUTION" == "Debian GNU/Linux"* ]]; then
-    PROFILES="ubuntu linux"
+PROFILES=()
+case "$UNAME" in
+  Darwin)
+    PROFILES+=(macos)
+    ;;
+  Linux*)
+    # shellcheck disable=SC1091
+    . /etc/os-release
+    case "$ID" in
+      ubuntu|debian)
+        PROFILES+=(ubuntu linux)
+        if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
+          PROFILES+=(ubuntu-desktop)
+        fi
+        ;;
+      *)
+        echo "unsupported Linux distribution: ${PRETTY_NAME:-$ID}" >&2
+        exit 1
+        ;;
+    esac
     if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
-      PROFILES="$PROFILES ubuntu-desktop"
+      PROFILES+=(linux-desktop)
     fi
+    ;;
+  *)
+    echo "unsupported OS: $UNAME" >&2
+    exit 1
+    ;;
+esac
+PROFILES+=(default)
 
-    # check if stow is installed
-    if ! command -v stow &> /dev/null
-    then
-      sudo apt update && sudo apt install -y stow
-    fi
-  fi
-  if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
-    PROFILES="$PROFILES linux-desktop"
-  fi
+if [[ "$DRY_RUN" == 1 ]]; then
+  printf '%s\n' "${PROFILES[@]}"
+  exit 0
 fi
 
-PROFILES="$PROFILES default"
+# stow is required by bashdot; install on apt-based systems if missing
+if [[ "$UNAME" == Linux* ]] && ! command -v stow &>/dev/null; then
+  sudo apt update && sudo apt install -y stow
+fi
 
-echo "Run $DOTFILES_ROOT/bashdot/bashdot/bashdot install $PROFILES..."
+git submodule update --init
 
-# make sure that /usr/local/bin is in PATH
-export PATH="/usr/local/bin:$PATH"
-export PATH="/opt/homebrew/bin:$PATH"
+# /opt/homebrew/bin is Apple Silicon brew prefix; /usr/local/bin covers Intel brew + system local
+if [[ "$UNAME" == "Darwin" ]]; then
+  export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+fi
 
-$DOTFILES_ROOT/bashdot/bashdot before  $PROFILES
-$DOTFILES_ROOT/bashdot/bashdot install $PROFILES
-$DOTFILES_ROOT/bashdot/bashdot after   $PROFILES
+for phase in before install after; do
+  echo ">>> bashdot $phase ${PROFILES[*]}"
+  "$BASHDOT" "$phase" "${PROFILES[@]}"
+done
