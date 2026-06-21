@@ -1,5 +1,0 @@
-*-crypt/** filter=git-crypt diff=git-crypt
-git-crypt-status filter=git-crypt diff=git-crypt
-
-# encrypt spellfile
-default/symlinks/vim/dot-config/nvim/spell/** filter=git-crypt diff=git-crypt

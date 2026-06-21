@@ -53,7 +53,6 @@ brew "languagetool"
 brew "dockutil", args: ['HEAD']
 
 brew "git"
-brew "git-crypt"
 brew "git-delta"
 brew "hexedit"
 brew "htop"

@@ -19,21 +19,6 @@ fi
 
 git submodule init && git submodule update
 
-# check if repo is still locked and should be unlocked
-if [ -s $DOTFILES_ROOT/git-crypt-status ]; then
-  read -p "Dotfiles are still encrypted, do you want to decrypt? [yN]: " -n 1 -r; echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    if [ ! -e dotfiles-key ]; then
-      echo "store the gpg key in as dotfiles-key"
-      exit 1
-    fi
-    git-crypt unlock dotfiles-key
-    ENABLE_CRYPT=1
-  fi
-else
-  ENABLE_CRYPT=1
-fi
-
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   SESSION_TYPE=remote/ssh
   # many other tests omitted
@@ -45,18 +30,10 @@ fi
 
 if [ "$(uname)" == "Darwin" ]; then
   PROFILES="macos"
-  if [ -n "$ENABLE_CRYPT" ]; then
-    PROFILES="$PROFILES macos-crypt"
-  fi
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   if [ -f "/etc/arch-release" ]; then
     PROFILES="arch linux"
 
-    # check if git-crypt is installed
-    if ! command -v git-crypt &> /dev/null
-    then
-      sudo pacman -S --noconfirm git-crypt
-    fi
     # check if stow is installed
     if ! command -v stow &> /dev/null
     then
@@ -70,19 +47,11 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
       PROFILES="$PROFILES ubuntu-desktop"
     fi
 
-    # check if git-crypt is installed
-    if ! command -v git-crypt &> /dev/null
-    then
-      sudo apt update && sudo apt install -y git-crypt
-    fi
     # check if stow is installed
     if ! command -v stow &> /dev/null
     then
       sudo apt update && sudo apt install -y stow
     fi
-  fi
-  if [ -n "$ENABLE_CRYPT" ]; then
-    PROFILES="$PROFILES linux-crypt"
   fi
   if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
     PROFILES="$PROFILES linux-desktop"
@@ -90,9 +59,6 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 PROFILES="$PROFILES default"
-if [ -n "$ENABLE_CRYPT" ]; then
-  PROFILES="$PROFILES default-crypt"
-fi
 
 echo "Run $DOTFILES_ROOT/bashdot/bashdot/bashdot install $PROFILES..."
 
