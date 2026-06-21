@@ -127,6 +127,6 @@ workon finder-sidebar-editor
 pip3 install pyobjc
 pip3 install finder-sidebar-editor
 mkdir -p $HOME/Developer
-python3 $(PWD)/../../finder-sidebar-editor.py
+python3 "$(dirname "$0")/../../finder-sidebar-editor.py"
 deactivate
 rmvirtualenv finder-sidebar-editor

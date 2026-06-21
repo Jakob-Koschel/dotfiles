@@ -60,7 +60,7 @@ if [[ "$UNAME" == Linux* ]] && ! command -v stow &>/dev/null; then
   sudo apt update && sudo apt install -y stow
 fi
 
-git submodule update --init
+git submodule update --init --recursive
 
 # /opt/homebrew/bin is Apple Silicon brew prefix; /usr/local/bin covers Intel brew + system local
 if [[ "$UNAME" == "Darwin" ]]; then

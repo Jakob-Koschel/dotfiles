@@ -11,7 +11,7 @@ fi
 # Install if necessary
 if ! command -v nvm >/dev/null; then
   echo "Installing nvm..."
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 fi
 
 # try loading it again
