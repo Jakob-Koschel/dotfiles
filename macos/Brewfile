@@ -80,7 +80,6 @@ brew "socat"
 brew "xz"
 # other useful binaries
 brew "ack"
-brew "mackup"
 brew "pygments"
 brew "rclone"
 brew "vgrep"
