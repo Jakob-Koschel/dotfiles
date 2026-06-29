@@ -3883,12 +3883,6 @@
           "full_name": "xbar"
         }
       },
-      "hammerspoon": {
-        "version": "0.9.100",
-        "options": {
-          "full_name": "hammerspoon"
-        }
-      },
       "keepingyouawake": {
         "version": "1.6.5",
         "options": {
