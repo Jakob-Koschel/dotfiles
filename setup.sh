@@ -25,9 +25,13 @@ case "$UNAME" in
     PROFILES+=(macos)
     ;;
   Linux*)
+    if [ ! -r /etc/os-release ]; then
+      echo "cannot detect Linux distribution: /etc/os-release not found" >&2
+      exit 1
+    fi
     # shellcheck disable=SC1091
     . /etc/os-release
-    case "$ID" in
+    case "${ID:-linux}" in
       ubuntu|debian)
         PROFILES+=(ubuntu linux)
         if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
@@ -35,7 +39,7 @@ case "$UNAME" in
         fi
         ;;
       *)
-        echo "unsupported Linux distribution: ${PRETTY_NAME:-$ID}" >&2
+        echo "unsupported Linux distribution: ${PRETTY_NAME:-${ID:-unknown}}" >&2
         exit 1
         ;;
     esac
@@ -53,6 +57,11 @@ PROFILES+=(default)
 if [[ "$DRY_RUN" == 1 ]]; then
   printf '%s\n' "${PROFILES[@]}"
   exit 0
+fi
+
+if [ ! -x "$BASHDOT" ]; then
+  echo "bashdot not found or not executable at $BASHDOT" >&2
+  exit 1
 fi
 
 # stow is required by bashdot; install on apt-based systems if missing
