@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+
+# heavily shrunk version of https://github.com/bashdot/bashdot/blob/master/bashdot
+
+set -e
+
+current_working_dir=$(pwd -P)
+
+LOGGER_FMT=${LOGGER_FMT:-"%Y-%m-%d"}
+LOGGER_LVL=${BASHDOT_LOG_LEVEL:-${LOGGER_LVL:-info}}
+
+action=$1
+
+usage() {
+  case "$1" in
+    commands)
+      echo "Usage: bashdot [install|before|after] OPTIONS"
+      ;;
+    install)
+      echo "Usage: bashdot install PROFILE1 PROFILE2 ... PROFILEN"
+      ;;
+    before)
+      echo "Usage: bashdot before PROFILE1 PROFILE2 ... PROFILEN"
+      ;;
+    after)
+      echo "Usage: bashdot after PROFILE1 PROFILE2 ... PROFILEN"
+      ;;
+  esac
+}
+
+case "$action" in
+  install|before|after) ;;
+  *) usage commands; exit 1 ;;
+esac
+
+exit_if_profile_directories_contain_invalid_characters() {
+  profile_dir=$1
+  for entry in "$profile_dir"/*; do
+    [ -e "$entry" ] || continue
+    case $(basename "$entry") in
+      *[[:space:]:,/\\]*)
+        log error "Files in '$profile_dir' contain invalid characters."
+        exit 1
+        ;;
+    esac
+  done
+}
+
+exit_if_invalid_directory_name() {
+  case "$1" in
+    ""|*[!/.a-zA-Z0-9_-]*)
+      log error "Current working directory '$1' has an invalid character. The directory you are in when you install a profile must have alpha numberic characters, with only dashes, dots or underscores."
+      exit 1
+      ;;
+  esac
+}
+
+exit_if_invalid_profile_name() {
+  case "$1" in
+    ""|*[!a-zA-Z0-9_-]*)
+      log error "Invalid profile name '$1'. Profiles must be alpha numeric with only dashes or underscores."
+      exit 1
+      ;;
+  esac
+}
+
+resolve_profile() {
+  profile=$1
+  profile_dir="$current_working_dir/$profile"
+  if [ ! -d "$profile_dir" ]; then
+    log error "Profile '$profile' directory does not exist."
+    exit 1
+  fi
+  exit_if_profile_directories_contain_invalid_characters "$profile_dir"
+}
+
+log() {
+  log_level=$1 && shift
+
+  case "$log_level" in
+    debug)  [[ "$LOGGER_LVL" =~ debug ]]           && echo "$( date "+${LOGGER_FMT}" ) - DEBUG - $*" 1>&2 ;;
+    info)   [[ "$LOGGER_LVL" =~ debug|info ]]      && echo "$( date "+${LOGGER_FMT}" ) - INFO - $*" 1>&2  ;;
+    warn)   [[ "$LOGGER_LVL" =~ debug|info|warn ]] && echo "$( date "+${LOGGER_FMT}" ) - WARN - $*" 1>&2  ;;
+    error)  [[ ! "$LOGGER_LVL" =~ none ]]          && echo "$( date "+${LOGGER_FMT}" ) - ERROR - $*" 1>&2 ;;
+  esac
+
+  # ensure a level filtered out above (a false '&&') doesn't trip 'set -e'
+  true
+}
+
+install() {
+  resolve_profile "$1"
+  symlinks_dir="$profile_dir/symlinks"
+
+  if ! command -v stow > /dev/null 2>&1; then
+    log error "'stow' is required but was not found on PATH. See the README for installation instructions."
+    exit 1
+  fi
+
+  stow_verbose=0
+  [[ "$LOGGER_LVL" =~ debug ]] && stow_verbose=1
+
+  log info "Adding dotfiles profile '$profile'."
+
+  log info "Installing dotfiles from '$profile_dir'."
+  cd "$symlinks_dir"
+  for dir in */; do
+    subdirs=("$dir"*/)
+    if [ -d "${subdirs[0]}" ]; then
+      # grouped package: stow each subdirectory into its own (dot- -> .) target
+      for subdir in "${subdirs[@]}"; do
+        subname=$(basename "$subdir")
+        targetdir=${subname/#dot-/.}
+        mkdir -p "$HOME/$targetdir"
+        (cd "$dir" && stow "$subname" --target "$HOME/$targetdir" --dotfiles --verbose="$stow_verbose")
+      done
+    else
+      # flat package: stow directly into $HOME
+      stow "$dir" --target "$HOME" --dotfiles --verbose="$stow_verbose"
+    fi
+  done
+
+  log info "Completed adding dotfiles profile '$profile'."
+}
+
+run_hooks() {
+  profile=$1
+  phase=$2
+  hooks_dir="$current_working_dir/$profile/run/$phase"
+
+  log info "Run $phase scripts for dotfiles profile '$profile'."
+
+  if [ -d "$hooks_dir" ]; then
+    for file in "$hooks_dir"/*; do
+        [ -e "$file" ] || continue
+        name=$(basename "$file")
+        if [ ! -x "$file" ]; then
+          log warn "Skipping non-executable hook '$name'. Run 'chmod +x' to enable it."
+          continue
+        fi
+        log info "Run $name script."
+        (cd "$hooks_dir" && "./$name")
+    done
+  else
+    log debug "$profile doesn't have $phase scripts"
+  fi
+
+  log info "Completed running $phase scripts for dotfiles profile '$profile'."
+}
+
+before() {
+  resolve_profile "$1"
+  run_hooks "$1" before
+}
+
+after() {
+  resolve_profile "$1"
+  run_hooks "$1" after
+}
+
+if [ "$#" -lt 2 ]; then
+  usage "$action"
+  exit 1
+fi
+
+exit_if_invalid_directory_name "$current_working_dir"
+
+shift
+for profile in "$@"; do
+  exit_if_invalid_profile_name "$profile"
+  "$action" "$profile"
+done
+
+log info "Completed '$action' of all profiles successfully."
