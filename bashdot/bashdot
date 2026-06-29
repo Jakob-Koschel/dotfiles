@@ -57,8 +57,8 @@ exit_if_invalid_directory_name() {
 
 exit_if_invalid_profile_name() {
   case "$1" in
-    ""|*[!a-zA-Z0-9_-]*)
-      log error "Invalid profile name '$1'. Profiles must be alpha numeric with only dashes or underscores."
+    ""|/*|*[!a-zA-Z0-9_/-]*)
+      log error "Invalid profile name '$1'. Profiles must be alpha numeric path segments with only dashes, underscores or '/' separators."
       exit 1
       ;;
   esac
@@ -100,6 +100,16 @@ install() {
   stow_verbose=0
   [[ "$LOGGER_LVL" =~ debug ]] && stow_verbose=1
 
+  stow_opts=(--dotfiles --verbose="$stow_verbose")
+  # BASHDOT_ADOPT imports pre-existing target files into the package instead of
+  # failing on conflict. Stow overwrites the package copy with the target's content,
+  # so reconcile afterwards (e.g. 'git restore' to keep the repo's version).
+  # Off for unset/empty/0/false/no/off; any other value enables it.
+  case "${BASHDOT_ADOPT:-}" in
+    ""|0|false|no|off) ;;
+    *) stow_opts+=(--adopt) ;;
+  esac
+
   log info "Adding dotfiles profile '$profile'."
 
   log info "Installing dotfiles from '$profile_dir'."
@@ -112,11 +122,11 @@ install() {
         subname=$(basename "$subdir")
         targetdir=${subname/#dot-/.}
         mkdir -p "$HOME/$targetdir"
-        (cd "$dir" && stow "$subname" --target "$HOME/$targetdir" --dotfiles --verbose="$stow_verbose")
+        (cd "$dir" && stow "$subname" --target "$HOME/$targetdir" "${stow_opts[@]}")
       done
     else
       # flat package: stow directly into $HOME
-      stow "$dir" --target "$HOME" --dotfiles --verbose="$stow_verbose"
+      stow "$dir" --target "$HOME" "${stow_opts[@]}"
     fi
   done
 

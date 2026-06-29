@@ -12,6 +12,7 @@ esac
 cd "$(dirname "$0")"
 DOTFILES_ROOT=$(pwd -P)
 BASHDOT="$DOTFILES_ROOT/bashdot/bashdot"
+PROFILES_ROOT="$DOTFILES_ROOT/profiles"
 UNAME=$(uname -s)
 
 SESSION_TYPE=""
@@ -33,9 +34,9 @@ case "$UNAME" in
     . /etc/os-release
     case "${ID:-linux}" in
       ubuntu|debian)
-        PROFILES+=(ubuntu linux)
+        PROFILES+=(linux/ubuntu linux/base)
         if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
-          PROFILES+=(ubuntu-desktop)
+          PROFILES+=(linux/ubuntu-desktop)
         fi
         ;;
       *)
@@ -44,7 +45,7 @@ case "$UNAME" in
         ;;
     esac
     if [[ "$SESSION_TYPE" != "remote/ssh" ]]; then
-      PROFILES+=(linux-desktop)
+      PROFILES+=(linux/desktop)
     fi
     ;;
   *)
@@ -52,7 +53,7 @@ case "$UNAME" in
     exit 1
     ;;
 esac
-PROFILES+=(default)
+PROFILES+=(common)
 
 if [[ "$DRY_RUN" == 1 ]]; then
   printf '%s\n' "${PROFILES[@]}"
@@ -76,7 +77,12 @@ if [[ "$UNAME" == "Darwin" ]]; then
   export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 fi
 
+# adopt pre-existing target files into the repo instead of failing on conflict;
+# reconcile afterwards with 'git restore profiles' to keep the repo's versions.
+# On by default; override with BASHDOT_ADOPT=0 ./setup.sh to disable.
+export BASHDOT_ADOPT="${BASHDOT_ADOPT:-1}"
+
 for phase in before install after; do
   echo ">>> bashdot $phase ${PROFILES[*]}"
-  "$BASHDOT" "$phase" "${PROFILES[@]}"
+  (cd "$PROFILES_ROOT" && "$BASHDOT" "$phase" "${PROFILES[@]}")
 done
