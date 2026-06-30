@@ -5,12 +5,14 @@ set -e
 # Ask for the administrator password upfront
 sudo -v
 
-# Keep-alive: update existing `sudo` time stamp until `osxprep.sh` has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# Keep `sudo` alive until this script exits, then stop the keep-alive loop.
+while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done &
+SUDO_KEEPALIVE_PID=$!
+trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
 
 hostname_file="$(dirname "$0")/../../hostname"
 
-if [ ! -e "$hostname_file" ]; then
+if [ ! -e "$hostname_file" ] && [ -t 0 ]; then
   read -rp "hostname does not exist, do you want to create it? [yN]: " -n 1; echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     read -rp "hostname: " line
@@ -27,17 +29,14 @@ if [ -e "$hostname_file" ]; then
 fi
 
 # set dark mode
-defaults write "Apple Global Domain" "AppleInterfaceStyle" "Dark"
-
-# TODO: I think this doens't work anymore :/
-defaults write -g AppleICUNumberSymbols -dict 0 ',' 1 '.' 10 ',' 17 '.'
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
 
 # TODO: require password immediately after sleep
 
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
 sudo systemsetup -settimezone "Europe/Berlin" > /dev/null
 
-# Set standby delay to 24 hours (default is 1 hour or 3600)
+# Set standby delay to 15 minutes (default is 1 hour / 3600 seconds)
 sudo pmset -a standbydelay 900
 # Set sleep to 15 minutes
 sudo pmset -a displaysleep 15
@@ -84,23 +83,9 @@ defaults write com.apple.helpviewer DevMode -bool true
 # in the login window
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
-# Check for software updates daily, not just once per week
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-
-###############################################################################
-# Bluetooth                                                                   #
-###############################################################################
-
-# Increase sound quality for Bluetooth headphones/headsets
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 80
-
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
-
-# Require password immediately after sleep or screen saver begins
-defaults write com.apple.screensaver askForPassword -int 1
-defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 # Save screenshots to the desktop
 defaults write com.apple.screencapture location -string "${HOME}/Desktop"
@@ -110,9 +95,6 @@ defaults write com.apple.screencapture type -string "png"
 
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
-
-# Enable subpixel font rendering on non-Apple LCDs
-defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
 ###############################################################################
 # Time Machine                                                                #
@@ -155,16 +137,6 @@ defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
 
 ###############################################################################
-# Mac App Store                                                               #
-###############################################################################
-
-# Enable the WebKit Developer Tools in the Mac App Store
-defaults write com.apple.appstore WebKitDeveloperExtras -bool true
-
-# Enable Debug Menu in the Mac App Store
-defaults write com.apple.appstore ShowDebugMenu -bool true
-
-###############################################################################
 # Messages                                                                    #
 ###############################################################################
 
@@ -178,24 +150,10 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
-# GPGMail 2                                                                   #
-###############################################################################
-
-# Disable signing emails by default
-defaults write ~/Library/Preferences/org.gpgtools.gpgmail SignNewEmailsByDefault -bool false
-
-###############################################################################
 # Notes                                                                       #
 ###############################################################################
 
 # crashing on macOS 14
 # defaults write com.apple.Notes ICTextStyleAutoListInsertionEnabled -int 0
 
-
 echo "Done. Note that some of these changes require a logout/restart of your OS to take effect.  At a minimum, be sure to restart your Terminal."
-
-
-###############################################################################
-# TeXShop
-###############################################################################
-defaults write TeXShop BringPdfFrontOnAutomaticUpdate NO

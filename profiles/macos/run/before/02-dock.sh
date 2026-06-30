@@ -42,102 +42,61 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 # (i.e. use the old Exposé behavior instead)
 defaults write com.apple.dock expose-group-by-app -bool false
 
-# Modify dock items
-if dockutil --find "Launchpad"; then
-  dockutil --remove "Launchpad"
-fi
-if dockutil --find "Safari"; then
-  dockutil --remove "Safari"
-fi
-if dockutil --find "Maps"; then
-  dockutil --remove "Maps"
-fi
-if dockutil --find "Photos"; then
-  dockutil --remove "Photos"
-fi
-if dockutil --find "Reminders"; then
-  dockutil --remove "Reminders"
-fi
-if dockutil --find "Contacts"; then
-  dockutil --remove "Contacts"
-fi
-if dockutil --find "Music"; then
-  dockutil --remove "Music"
-fi
-if dockutil --find "Podcasts"; then
-  dockutil --remove "Podcasts"
-fi
-if dockutil --find "News"; then
-  dockutil --remove "News"
-fi
-if dockutil --find "TV"; then
-  dockutil --remove "TV"
-fi
-if dockutil --find "App Store"; then
-  dockutil --remove "App Store"
-fi
-if dockutil --find "Keynote"; then
-  dockutil --remove "Keynote"
-fi
-if dockutil --find "Numbers"; then
-  dockutil --remove "Numbers"
-fi
-if dockutil --find "Pages"; then
-  dockutil --remove "Pages"
-fi
+###############################################################################
+# Dock contents (dockutil)                                                    #
+#                                                                             #
+# All dockutil calls use --no-restart; the Dock is restarted once at the end. #
+###############################################################################
 
-if dockutil --find "Mail"; then
-  dockutil --move "Mail" --position 'first'
-fi
-if dockutil --find "Calendar"; then
-  dockutil --move "Calendar" --after 'Mail'
-fi
+# Move an existing Dock item; no-op if it isn't present.
+move_item() {  # label, position-args...
+  local label=$1; shift
+  if dockutil --find "$label" >/dev/null 2>&1; then
+    dockutil --move "$label" "$@" --no-restart
+  fi
+}
 
-if dockutil --find "Google Chrome"; then
-  dockutil --move "Google Chrome" --after 'Calendar'
-else
-  dockutil --add "/Applications/Google Chrome.app" --after 'Calendar'
-fi
-if dockutil --find "Brave Browser"; then
-  dockutil --move "Brave Browser" --after 'Google Chrome'
-else
-  dockutil --add "/Applications/Brave Browser.app" --after 'Google Chrome'
-fi
-if dockutil --find "FaceTime"; then
-  dockutil --move "FaceTime" --after 'Messages'
-else
-  dockutil --add "/System/Applications/FaceTime.app" --after 'Messages'
-fi
-if dockutil --find "Obsidian"; then
-  dockutil --move "Obsidian" --after 'FaceTime'
-else
-  dockutil --add "/Applications/Obsidian.app" --after 'FaceTime'
-fi
-if dockutil --find "Spotify"; then
-  dockutil --move "Spotify" --after 'Notes'
-else
-  dockutil --add /Applications/Spotify.app --after 'Notes'
-fi
-if dockutil --find "Discord"; then
-  dockutil --move "Discord" --after 'Spotify'
-else
-  dockutil --add /Applications/Discord.app --after 'Spotify'
-fi
-if dockutil --find "Slack"; then
-  dockutil --move "Slack" --after 'Discord'
-else
-  dockutil --add /Applications/Slack.app --after 'Discord'
-fi
-if dockutil --find "iTerm"; then
-  dockutil --move "iTerm" --after 'Slack'
-else
-  dockutil --add /Applications/iTerm.app --after 'Slack'
-fi
+# Ensure an app is in the Dock: move it if present, add it if installed,
+# otherwise skip (so a missing app doesn't abort the run).
+place_app() {  # label, app-path, position-args...
+  local label=$1 path=$2; shift 2
+  if dockutil --find "$label" >/dev/null 2>&1; then
+    dockutil --move "$label" "$@" --no-restart
+  elif [[ -e "$path" ]]; then
+    dockutil --add "$path" "$@" --no-restart
+  else
+    echo "skipping Dock entry '$label': $path not found"
+  fi
+}
 
-if dockutil --find "Applications"; then
-  dockutil --move "Applications" --before 'Downloads'
+# Remove unwanted default Dock items
+remove_items=(
+  Launchpad Safari Maps Photos Reminders Contacts Music
+  Podcasts News TV "App Store" Keynote Numbers Pages
+)
+for item in "${remove_items[@]}"; do
+  if dockutil --find "$item" >/dev/null 2>&1; then
+    dockutil --remove "$item" --no-restart
+  fi
+done
+
+# Order the Dock
+move_item "Mail"     --position first
+move_item "Calendar" --after Mail
+place_app "Firefox"                   "/Applications/Firefox.app"                   --after Calendar
+place_app "Firefox Developer Edition" "/Applications/Firefox Developer Edition.app" --after Firefox
+place_app "FaceTime"                  "/System/Applications/FaceTime.app"           --after Messages
+place_app "Obsidian"                  "/Applications/Obsidian.app"                  --after FaceTime
+place_app "Spotify"                   "/Applications/Spotify.app"                   --after Notes
+place_app "Discord"                   "/Applications/Discord.app"                   --after Spotify
+place_app "Slack"                     "/Applications/Slack.app"                     --after Discord
+place_app "iTerm"                     "/Applications/iTerm.app"                     --after Slack
+
+# Applications stack (added as a grid folder view if not already present)
+if dockutil --find "Applications" >/dev/null 2>&1; then
+  dockutil --move "Applications" --before Downloads --no-restart
 else
-  dockutil --add '/Applications' --view grid --display folder --before 'Downloads'
+  dockutil --add "/Applications" --view grid --display folder --before Downloads --no-restart
 fi
 
 # Disable Dashboard
@@ -164,4 +123,7 @@ defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
 
 # Reset Launchpad, but keep the desktop wallpaper intact
-find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+find "${HOME}/Library/Application Support/Dock" -maxdepth 1 -name "*-*.db" -delete
+
+# Apply all of the above with a single Dock restart
+killall Dock

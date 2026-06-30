@@ -61,35 +61,35 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 # /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 # /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 
+# Configure desktop/Finder icon view settings, adding keys that don't exist yet
+# (a bare Set would abort under `set -e` when the sub-dict isn't present).
+finder_plist="$HOME/Library/Preferences/com.apple.finder.plist"
+set_finder_view() {  # key-path, type, value
+  local key=$1 type=$2 value=$3
+  if /usr/libexec/PlistBuddy -c "Print $key" "$finder_plist" >/dev/null 2>&1; then
+    /usr/libexec/PlistBuddy -c "Set $key $value" "$finder_plist"
+  else
+    /usr/libexec/PlistBuddy -c "Add $key $type $value" "$finder_plist"
+  fi
+}
+
 # Show item info at the bottom of the icons on the desktop
-/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom true" ~/Library/Preferences/com.apple.finder.plist
+set_finder_view ":DesktopViewSettings:IconViewSettings:labelOnBottom" bool true
 
 # Enable snap-to-grid for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-if /usr/libexec/PlistBuddy -c "Print :FK_StandardViewSettings:IconViewSettings:arrangeBy" ~/Library/Preferences/com.apple.finder.plist; then
-  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-else
-  /usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:arrangeBy string grid" ~/Library/Preferences/com.apple.finder.plist
-fi
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+set_finder_view ":DesktopViewSettings:IconViewSettings:arrangeBy"     string grid
+set_finder_view ":FK_StandardViewSettings:IconViewSettings:arrangeBy" string grid
+set_finder_view ":StandardViewSettings:IconViewSettings:arrangeBy"    string grid
 
 # Set grid spacing for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 50" ~/Library/Preferences/com.apple.finder.plist
-if /usr/libexec/PlistBuddy -c "Print :FK_StandardViewSettings:IconViewSettings:gridSpacing" ~/Library/Preferences/com.apple.finder.plist; then
-  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 50" ~/Library/Preferences/com.apple.finder.plist
-else
-  /usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:gridSpacing integer 50" ~/Library/Preferences/com.apple.finder.plist
-fi
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 50" ~/Library/Preferences/com.apple.finder.plist
+set_finder_view ":DesktopViewSettings:IconViewSettings:gridSpacing"     integer 50
+set_finder_view ":FK_StandardViewSettings:IconViewSettings:gridSpacing" integer 50
+set_finder_view ":StandardViewSettings:IconViewSettings:gridSpacing"    integer 50
 
 # Set the size of icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
-if /usr/libexec/PlistBuddy -c "Print :FK_StandardViewSettings:IconViewSettings:iconSize" ~/Library/Preferences/com.apple.finder.plist; then
-  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
-else
-  /usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:iconSize integer 48" ~/Library/Preferences/com.apple.finder.plist
-fi
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
+set_finder_view ":DesktopViewSettings:IconViewSettings:iconSize"     integer 48
+set_finder_view ":FK_StandardViewSettings:IconViewSettings:iconSize" integer 48
+set_finder_view ":StandardViewSettings:IconViewSettings:iconSize"    integer 48
 
 # Use list view in all Finder windows by default
 # Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
@@ -97,9 +97,6 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Disable the warning before emptying the Trash
 # defaults write com.apple.finder WarnOnEmptyTrash -bool false
-
-# Empty Trash securely by default
-defaults write com.apple.finder EmptyTrashSecurely -bool true
 
 # Enable AirDrop over Ethernet and on unsupported Macs running Lion
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
@@ -117,16 +114,14 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
     OpenWith -bool true \
     Privileges -bool true
 
-# TODO: check if this works
-export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-source `which virtualenvwrapper.sh`
-# somehow mkvirtualenv fails with set -e enabled
-set +e; mkvirtualenv finder-sidebar-editor; set -e;
-workon finder-sidebar-editor
-# currently the pip package is broken with latest pyObjc
-pip3 install pyobjc
-pip3 install finder-sidebar-editor
-mkdir -p $HOME/Developer
-python3 "$(dirname "$0")/../../finder-sidebar-editor.py"
-deactivate
-rmvirtualenv finder-sidebar-editor
+# Configure the Finder sidebar (remove the defaults, add ~/Developer and ~).
+# The helper talks to LSSharedFileList directly, so it only needs pyobjc; run it
+# from a throwaway virtualenv that is cleaned up on exit.
+mkdir -p "$HOME/Developer"
+
+sidebar_venv="$(mktemp -d)"
+trap 'rm -rf "$sidebar_venv"' EXIT
+python3 -m venv "$sidebar_venv"
+"$sidebar_venv/bin/pip" install --quiet --upgrade pip
+"$sidebar_venv/bin/pip" install --quiet pyobjc
+"$sidebar_venv/bin/python" "$(dirname "$0")/../../finder-sidebar-editor.py"

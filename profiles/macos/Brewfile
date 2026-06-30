@@ -38,7 +38,6 @@ brew "gpg"
 # brew "pinentry-mac"
 brew "go"
 brew "tldr"
-brew "languagetool"
 
 brew "dockutil", args: ['HEAD']
 

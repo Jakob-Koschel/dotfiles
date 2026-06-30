@@ -2,35 +2,28 @@
 
 set -e
 
-# TODO: test if everything is there
+# Menu bar items are managed by Control Center since macOS 11 (Big Sur); the old
+# SystemUIServer "Menu Extras" mechanism no longer exists. Note: Siri and Time
+# Machine have no reliable defaults key to hide them -- do that in System
+# Settings > Control Center if needed.
 
-defaults write com.apple.systemuiserver "NSStatusItem Visible Siri" -int 0
-defaults write com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.TimeMachine" -int 0
+# Show items in the menu bar
+defaults write com.apple.controlcenter "NSStatusItem Visible Battery"   -int 1
+defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth" -int 1
+defaults write com.apple.controlcenter "NSStatusItem Visible Sound"     -int 1   # volume
+defaults write com.apple.controlcenter "NSStatusItem Visible WiFi"      -int 1   # airport
+defaults write com.apple.controlcenter "NSStatusItem Visible Clock"     -int 1
 
-defaults write com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.volume" -int 1
-defaults write com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.airport" -int 1
-defaults write com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.clock" -int 1
-defaults write com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.bluetooth" -int 1
-defaults write com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.battery" -int 1
+# Show the battery percentage
+defaults write com.apple.controlcenter BatteryShowPercentage -bool true
 
-defaults write com.apple.systemuiserver menuExtras -array \
-      "/System/Library/CoreServices/Menu Extras/Volume.menu" \
-      "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-      "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-      "/System/Library/CoreServices/Menu Extras/Battery.menu" \
-      "/System/Library/CoreServices/Menu Extras/Clock.menu"
-
-# TODO: bluetooth now lives in 'Library/Preferences/com.apple.controlcenter.plist'
-# TODO: audio now lives in 'Library/Preferences/com.apple.controlcenter.plist'
-# TODO: disable Now Playing
-# TODO: showing battery percentage doesn't work on Big Sur
-
-# show the percentage of battery
-defaults write com.apple.menuextra.battery ShowPercent YES
-
-# include the date in the menu bar clock
-defaults write com.apple.menuextra.clock IsAnalog -bool false
-defaults write com.apple.menuextra.clock DateFormat -string "EEE d. MMM  HH:mm"
+# Use a digital (not analog) menu bar clock. The clock's date/time format is
+# driven by the Show* keys below rather than the old DateFormat string.
+defaults write com.apple.menuextra.clock IsAnalog       -bool false
+defaults write com.apple.menuextra.clock Show24Hour     -bool true
+defaults write com.apple.menuextra.clock ShowDate       -int 1
+defaults write com.apple.menuextra.clock ShowDayOfWeek  -bool true
+defaults write com.apple.menuextra.clock ShowAMPM       -bool false
 
 # restart to reflect changes
-killall SystemUIServer
+killall ControlCenter

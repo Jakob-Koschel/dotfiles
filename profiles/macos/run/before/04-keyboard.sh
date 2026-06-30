@@ -26,7 +26,7 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
 # Disable automatic period insertion on double-space
-defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 
 # Disable automatic capitalization as it’s annoying when typing code
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
@@ -43,8 +43,12 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
   "Set AppleSymbolicHotKeys:61:enabled false"
 
 # change spotlight shortcut
-if /usr/libexec/PlistBuddy -c "Print AppleSymbolicHotKeys:64:value:parameters:2" ~/Library/Preferences/com.apple.symbolichotkeys.plist; then
+if /usr/libexec/PlistBuddy -c "Print AppleSymbolicHotKeys:64:value:parameters:2" ~/Library/Preferences/com.apple.symbolichotkeys.plist >/dev/null 2>&1; then
   /usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c "Set AppleSymbolicHotKeys:64:value:parameters:2 524288"
 else
   /usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist -c "Add AppleSymbolicHotKeys:64:value:parameters:2 integer 524288"
 fi
+
+# Reload the symbolic hotkeys so the changes above take effect immediately
+# (and aren't clobbered by cfprefsd's cached copy)
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
