@@ -1,17 +1,6 @@
 syntax on
 filetype plugin indent on
 
-let g:coc_global_extensions = [
-\ 'coc-json',
-\ 'coc-tsserver',
-\ 'coc-html',
-\ 'coc-css',
-\ 'coc-yaml',
-\ 'coc-clangd',
-\ 'coc-pyright',
-\ 'coc-ltex',
-\ ]
-
 lua << EOF
 require("config.lazy")
 EOF
@@ -68,22 +57,11 @@ set termguicolors
 " pasting over a selection should not change the buffer (to paste the same thing again later)
 vnoremap p "_dP
 
-" fix pink on pink popups with coc warnings/errors
+" fix pink on pink popups in the completion/diagnostics menu
 highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 " vim-signify
 let g:signify_sign_change = '~'
-
-" coc.nvim
-let g:coc_config_home = '~/.config/coc'
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Remap keys for applying code actions at the cursor position
-nmap <leader>ac  <Plug>(coc-codeaction-cursor)
 
 " use arrow keys for resizing
 nnoremap <Up>    :resize -2<CR>
