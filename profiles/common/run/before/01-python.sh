@@ -2,15 +2,14 @@
 
 set -e
 
-# virtualenv stuff is essential
+# virtualenv stuff is essential; it must be provided by the system package
+# manager (Homebrew on macOS, apt on Linux).
 if ! command -v virtualenv &> /dev/null; then
-  pip3 install --user virtualenv
-fi
-if ! command -v virtualenvwrapper.sh &> /dev/null; then
-  pip3 install --user virtualenvwrapper
+  echo "error: virtualenv not found; install it via your package manager" >&2
+  exit 1
 fi
 
-# Locate virtualenvwrapper.sh wherever it was installed (Homebrew, pip --user, distro).
+# Locate virtualenvwrapper.sh wherever it was installed (Homebrew, distro, ...).
 wrapper_sh="$(command -v virtualenvwrapper.sh || true)"
 if [ -z "$wrapper_sh" ]; then
   for candidate in \
@@ -25,17 +24,9 @@ if [ -z "$wrapper_sh" ]; then
   done
 fi
 
-if [ -n "$wrapper_sh" ]; then
-  source "$wrapper_sh"
-else
-  echo "warning: virtualenvwrapper.sh not found; skipping source" >&2
+if [ -z "$wrapper_sh" ]; then
+  echo "error: virtualenvwrapper not found; install it via your package manager" >&2
+  exit 1
 fi
-
-# pynvim for neovim support
-if ! pip3 show pynvim >/dev/null; then
-  pip3 install --user --break-system-packages pynvim
-fi
-
-if ! pip3 show python-dotenv >/dev/null; then
-  pip3 install --user --break-system-packages python-dotenv
-fi
+# shellcheck disable=SC1090
+source "$wrapper_sh"
