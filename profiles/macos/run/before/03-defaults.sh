@@ -8,15 +8,17 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until `osxprep.sh` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-if [ ! -e $(PWD)/../../hostname ]; then
-  read -p "hostname does not exist, do you want to create it? [yN]: " -n 1 -r; echo
+hostname_file="$(dirname "$0")/../../hostname"
+
+if [ ! -e "$hostname_file" ]; then
+  read -rp "hostname does not exist, do you want to create it? [yN]: " -n 1; echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    read -p "hostname: " line
-    echo "$line" > $(PWD)/../../hostname
+    read -rp "hostname: " line
+    echo "$line" > "$hostname_file"
   fi
 fi
-if [ -e $(PWD)/../../hostname ]; then
-  HOSTNAME=$(<$(PWD)/../../hostname)
+if [ -e "$hostname_file" ]; then
+  HOSTNAME=$(<"$hostname_file")
   # Set computer name (as done via System Preferences → Sharing)
   sudo scutil --set ComputerName "$HOSTNAME"
   sudo scutil --set HostName "$HOSTNAME"
